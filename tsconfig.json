@@ -26,7 +26,18 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
-        "baseUrl": "./src"
+        "baseUrl": "./",
+        "paths": {
+            "@assets/*": ["src/assets/*"],
+            "@components/*": ["src/components/*"],
+            "@pages/*": ["src/pages/*"],
+            "@utils/*": ["src/utils/*"],
+            "@services/*": ["src/services/*"],
+            "@constants/*": ["src/constants/*"],
+            "@types/*": ["src/types/*"],
+            "@hooks/*": ["src/hooks/*"],
+            "@routes/*": ["src/routes/*"],
+        }
     },
     "include": ["src", "eslint.config.js", "vite.config.ts", "global.d.ts", "vite-env.d.ts"],
     "exclude": ["node_modules", "dist"]
