@@ -5,7 +5,15 @@ export default defineConfig({
         globals: true,
         environment: 'jsdom',
         coverage: {
-            reporter: ['text', 'html'],
+            exclude: ['**/*.config.*', './src/index.tsx', '**/vite-env.*'],
+            reporter: ['text', 'json-summary', 'json'],
+            reportOnFailure: true,
+            thresholds: {
+                lines: 25,
+                branches: 25,
+                functions: 25,
+                statements: 25,
+            },
         },
     },
 });

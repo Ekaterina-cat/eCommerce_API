@@ -36,7 +36,7 @@
             "@constants/*": ["src/constants/*"],
             "@types/*": ["src/types/*"],
             "@hooks/*": ["src/hooks/*"],
-            "@routes/*": ["src/routes/*"],
+            "@routes/*": ["src/routes/*"]
         }
     },
     "include": ["src", "eslint.config.js", "vite.config.ts", "global.d.ts", "vite-env.d.ts"],
