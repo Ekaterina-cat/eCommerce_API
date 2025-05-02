@@ -2,7 +2,7 @@ name: Pull Request Checks
 
 on:
     pull_request:
-        branches: [main, develop]
+        branches: [main, develop, 'release/**']
 
 jobs:
     test:
@@ -28,7 +28,7 @@ jobs:
               run: npm run lint
 
             - name: 'Test Coverage'
-              run: npm run coverage
+              run: npm run test:coverage
 
             - name: 'Report Coverage'
               if: always()

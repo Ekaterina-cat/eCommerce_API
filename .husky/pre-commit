@@ -1,1 +1,9 @@
-npx lint-staged
+echo "=====>>>> Pre-commit hook starting <<<<<====="
+
+echo "=====>>>> ts is running <<<<<====="
+npm run typecheck
+
+echo "=====>>>> lint is running <<<<<====="
+npm run lint
+
+echo "=====>>>> Pre-commit hook ending <<<<<====="

@@ -6,7 +6,7 @@ export default defineConfig({
         environment: 'jsdom',
         coverage: {
             exclude: ['**/*.config.*', './src/index.tsx', '**/vite-env.*'],
-            reporter: ['text', 'json-summary', 'json'],
+            reporter: ['text', 'json-summary', 'json', 'html'],
             reportOnFailure: true,
             thresholds: {
                 lines: 25,
