@@ -7,22 +7,8 @@
 - [ ] Task 2
 
 **📝 Changes Description**
-<!-- Which files were modified/added? -->
-- Affected files/components:
-  - `src/path/to/file.js`
-  - `src/components/Component.vue`
-- Summary of changes (1-2 sentences):
-
-**🎯 Rationale for Changes**
-<!-- Why are these changes necessary? -->
-- How does this align with sprint goals?
-
-**✅ Completion Checklist**
-<!-- Remove/add items-->
-- [ ] Test coverage (>25% for each component)
-- [ ] Complies with code standards (ESLint/Prettier)
-- [ ] Verified no conflicts with develop
-- [ ] Documentation updated (if required)
+- Summary of changes (1-2 sentences)
+- Why these changes are necessary for this task/sprint?
 
 **⚠️ Special Notes**
 <!-- Remove/add items-->
@@ -31,4 +17,4 @@
 - [ ] Impacts CommerceTools API
 
 **📸 Visual Changes (if applicable)**
-<!-- Screenshots/GIFs of UI changes -->
+<!-- Screenshots/Videos/GIFs of UI changes -->
