@@ -1,8 +1,6 @@
-### [T-number] Brief Task Title
-- Task tracker link: [T-number](ссылка)
+Task tracker link: [T-number](link)
 
 **📌 Related Sprint Tasks** 
-<!-- Links to tasks in tracker (e.g. eCommerce-Application #7) -->
 - [ ] Task 1
 - [ ] Task 2
 
@@ -11,10 +9,9 @@
 - Why these changes are necessary for this task/sprint?
 
 **⚠️ Special Notes**
-<!-- Remove/add items-->
 - [ ] Requires dependency update (npm install)
 - [ ] Environment variables modified
 - [ ] Impacts CommerceTools API
 
 **📸 Visual Changes (if applicable)**
-<!-- Screenshots/Videos/GIFs of UI changes -->
+<!-- Screenshots/Videos -->
