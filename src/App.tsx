@@ -1,3 +1,4 @@
+import { Header } from '@components/Header.tsx';
 import { Login } from '@pages/Login.tsx';
 import { Main } from '@pages/Main.tsx';
 import { Register } from '@pages/Register.tsx';
@@ -6,14 +7,19 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 function App(): JSX.Element {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/main" element={<Main />} />
-                {/*<Route path="/" element={<NotFound />} />*/}
-            </Routes>
-        </BrowserRouter>
+        <>
+            <BrowserRouter>
+                <Header />
+                <main className="container mx-auto py-6 px-4 md:px-6">
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/main" element={<Main />} />
+                        {/*<Route path="/" element={<NotFound />} />*/}
+                    </Routes>
+                </main>
+            </BrowserRouter>
+        </>
     );
 }
 
