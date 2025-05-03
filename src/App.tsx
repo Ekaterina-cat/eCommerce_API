@@ -1,6 +1,7 @@
 import { Header } from '@components/Header.tsx';
 import { Login } from '@pages/Login.tsx';
 import { Main } from '@pages/Main.tsx';
+import { NotFound } from '@pages/NotFound.tsx';
 import { Register } from '@pages/Register.tsx';
 import type { JSX } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -15,7 +16,7 @@ function App(): JSX.Element {
                         <Route path="/" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/main" element={<Main />} />
-                        {/*<Route path="/" element={<NotFound />} />*/}
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
             </BrowserRouter>
