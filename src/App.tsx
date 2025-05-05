@@ -1,8 +1,8 @@
 import HeaderContainer from '@components/Header/Header.container.tsx';
-import { Login } from '@pages/Login.tsx';
-import { Main } from '@pages/Main.tsx';
-import { NotFound } from '@pages/NotFound.tsx';
-import { Register } from '@pages/Register.tsx';
+import { Login } from '@pages/Login/Login.tsx';
+import { Main } from '@pages/Main/Main.tsx';
+import { NotFound } from '@pages/NotFound/NotFound.tsx';
+import { Register } from '@pages/Registerr/Register.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
 import ProtectedRoute from '@routes/guards/ProtectedRoute.tsx';
 import type { JSX } from 'react';

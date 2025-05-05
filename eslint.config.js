@@ -19,7 +19,7 @@ export default [
         },
     },
     {
-        ignores: ['dist/*', 'node_modules/*', '**/*.config.{js,ts}', '**/*.test.{js,ts}'],
+        ignores: ['dist/*', 'node_modules/*', '**/*.config.{js,ts}', '**/*.test.{js,ts}', 'coverage/*'],
     },
     ...tseslint.configs.recommendedTypeChecked,
     {
