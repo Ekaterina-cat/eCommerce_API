@@ -37,9 +37,15 @@
             "@types/*": ["src/types/*"],
             "@hooks/*": ["src/hooks/*"],
             "@routes/*": ["src/routes/*"],
-            "@lib/*": ["src/lib/*"],
+            "@lib/*": ["src/lib/*"]
         }
     },
-    "include": ["src", "eslint.config.js", "vite.config.ts", "global.d.ts", "vite-env.d.ts"],
+    "include": [
+        "src",
+        "eslint.config.js",
+        "vite.config.ts",
+        "global.d.ts",
+        "vite-env.d.ts",
+    ],
     "exclude": ["node_modules", "dist"]
 }
