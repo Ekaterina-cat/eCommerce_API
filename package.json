@@ -16,6 +16,9 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@commercetools/api-request-builder": "^7.0.1",
+        "@commercetools/platform-sdk": "^8.9.0",
+        "@commercetools/ts-client": "^3.3.0",
         "@radix-ui/react-navigation-menu": "^1.2.10",
         "@react-router/dev": "^7.5.3",
         "@tailwindcss/vite": "^4.1.5",
