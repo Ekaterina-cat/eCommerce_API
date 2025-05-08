@@ -5,30 +5,32 @@ import {
     NavigationMenuList,
 } from '@components/ui/navigation-menu.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
+import { useUserStore } from '@store/store.ts';
 import type { JSX } from 'react';
 
 interface HeaderViewProps {
-    user: string | null;
     onLogout: () => void;
 }
 
-const HeaderView = ({ user, onLogout }: HeaderViewProps): JSX.Element => {
+const HeaderView = ({ onLogout }: HeaderViewProps): JSX.Element => {
+    const isLoggedIn = useUserStore((state) => state.isLoggedIn);
+
     return (
         <header className="header">
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuLink href={ROUTE_PATH.MAIN}>Main</NavigationMenuLink>
+                        <NavigationMenuLink to={ROUTE_PATH.MAIN}>Main</NavigationMenuLink>
                     </NavigationMenuItem>
-                    {user ? (
+                    {isLoggedIn ? (
                         <button onClick={onLogout}>Logout</button>
                     ) : (
                         <>
                             <NavigationMenuItem>
-                                <NavigationMenuLink href={ROUTE_PATH.LOGIN}>Login</NavigationMenuLink>
+                                <NavigationMenuLink to={ROUTE_PATH.LOGIN}>Login</NavigationMenuLink>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <NavigationMenuLink href={ROUTE_PATH.REGISTER}>Register</NavigationMenuLink>
+                                <NavigationMenuLink to={ROUTE_PATH.REGISTER}>Register</NavigationMenuLink>
                             </NavigationMenuItem>
                         </>
                     )}

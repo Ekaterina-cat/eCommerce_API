@@ -1,26 +1,57 @@
-import * as constantModule from '@constants/constant';
-import { render } from '@testing-library/react';
-import { describe, it, vi } from 'vitest';
+import { Login } from '@pages/Login/Login.tsx';
+import { Main } from '@pages/Main/Main.tsx';
+import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
+import ProtectedRoute from '@routes/guards/ProtectedRoute';
+import { useUserStore } from '@store/store';
+import { render, screen } from '@testing-library/react';
+import type { JSX } from 'react';
+import { MemoryRouter, Route, Routes } from 'react-router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import ProtectedRoute from './ProtectedRoute';
-
-vi.mock('react-router', () => ({
-    Navigate: vi.fn(() => null),
-    Outlet: vi.fn(() => null),
+vi.mock('@pages/Login/Login.tsx', () => ({
+    Login: (): JSX.Element => <div>Login</div>,
 }));
 
-vi.mock('@constants/constant', () => ({
-    USER: null,
+vi.mock('@pages/Main/Main.tsx', () => ({
+    Main: (): JSX.Element => <div>Main</div>,
 }));
 
 describe('ProtectedRoute', () => {
-    it('should render Outlet when USER is false', () => {
-        render(<ProtectedRoute />);
+    beforeEach(() => {
+        vi.clearAllMocks();
     });
 
-    it('should redirect to main route when USER is true', () => {
-        vi.spyOn(constantModule, 'USER', 'get').mockReturnValue('Test');
+    it('should redirect to main when user is logged in', () => {
+        vi.mocked(useUserStore).setState({ isLoggedIn: true });
 
-        render(<ProtectedRoute />);
+        render(
+            <MemoryRouter initialEntries={[ROUTE_PATH.LOGIN]}>
+                <Routes>
+                    <Route path={ROUTE_PATH.MAIN} element={<Main />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path={ROUTE_PATH.LOGIN} element={<Login />} />
+                    </Route>
+                </Routes>
+            </MemoryRouter>,
+        );
+
+        expect(screen.getByText('Main')).toBeDefined();
+    });
+
+    it('should show Login when user is not logged in', () => {
+        vi.mocked(useUserStore).setState({ isLoggedIn: false });
+
+        render(
+            <MemoryRouter initialEntries={[ROUTE_PATH.LOGIN]}>
+                <Routes>
+                    <Route path={ROUTE_PATH.MAIN} element={<Main />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path={ROUTE_PATH.LOGIN} element={<Login />} />
+                    </Route>
+                </Routes>
+            </MemoryRouter>,
+        );
+
+        expect(screen.getByText('Login')).toBeDefined();
     });
 });

@@ -1,4 +1,4 @@
-import type { LoginInputs } from '@components/LoginForm/LoginForm.container.tsx';
+import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
 import { LoginFormErrorMessage, ValidationRule } from '@components/LoginForm/types/LoginForm.ts';
 import type { FormEvent, JSX } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';

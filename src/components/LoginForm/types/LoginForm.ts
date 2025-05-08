@@ -9,3 +9,8 @@ export const enum ValidationRule {
     MinLength = 'minLength',
     Required = 'required',
 }
+
+export type LoginInputs = {
+    email: string;
+    password: string;
+};
