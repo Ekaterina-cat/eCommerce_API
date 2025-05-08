@@ -9,6 +9,11 @@ interface UserCredentials {
     password: string;
 }
 
+interface Login extends UserCredentials {
+    successCallback?: (userInfo: UserInfo) => void;
+    errorCallback?: (errorMessage: string) => void;
+}
+
 interface UserInfo {
     customer: Customer;
     tokenStore: {
@@ -26,7 +31,7 @@ class ClientService {
         expirationTime: 0,
     };
 
-    public async login({ email, password }: UserCredentials): Promise<UserInfo> {
+    public async login({ email, password, successCallback, errorCallback }: Login): Promise<UserInfo | undefined> {
         try {
             const apiRoot = createApiBuilderFromCtpClient(this.getClient({ email, password }));
             const response = await apiRoot
@@ -41,16 +46,25 @@ class ClientService {
                 .execute();
 
             if (response.statusCode === 200) {
-                return {
+                const userInfo = {
                     customer: response.body.customer,
-                    tokenStore: { ...this.tokenStore },
+                    tokenStore: this.tokenStore,
                 };
-            } else {
-                throw new Error('Invalid login credentials');
+
+                if (successCallback) {
+                    successCallback(userInfo);
+                }
+
+                return userInfo;
             }
         } catch (error) {
-            console.log(error);
-            throw error;
+            if (errorCallback) {
+                if (error instanceof Error) {
+                    errorCallback(error.message);
+                } else if (typeof error === 'string') {
+                    errorCallback(error);
+                }
+            }
         }
     }
 
