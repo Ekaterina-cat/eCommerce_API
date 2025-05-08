@@ -5,6 +5,7 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'jsdom',
+        setupFiles: './src/setupTests.tsx',
         coverage: {
             exclude: [
                 '**/*.config.*',
@@ -36,6 +37,7 @@ export default defineConfig({
             '@hooks': path.resolve(__dirname, './src/hooks'),
             '@routes': path.resolve(__dirname, './src/routes'),
             '@lib': path.resolve(__dirname, './src/lib'),
+            '@store': path.resolve(__dirname, './src/store'),
         },
     },
 });

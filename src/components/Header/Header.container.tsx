@@ -1,13 +1,12 @@
 import HeaderView from '@components/Header/Header.view.tsx';
-import { USER } from '@constants/constant.ts';
+import { useUserStore } from '@store/store.ts';
 import type { JSX } from 'react';
-import { useState } from 'react';
 
 const HeaderContainer = (): JSX.Element => {
-    const [user, setUser] = useState<string | null>(USER);
-    const handleLogout = (): void => setUser(null);
+    const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
+    const handleLogout = (): void => updateIsLoggedIn(false);
 
-    return <HeaderView user={user} onLogout={handleLogout} />;
+    return <HeaderView onLogout={handleLogout} />;
 };
 
 export default HeaderContainer;

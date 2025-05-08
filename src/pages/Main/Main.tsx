@@ -14,10 +14,10 @@ export const Main = (): JSX.Element => {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuLink href={ROUTE_PATH.LOGIN}>Login</NavigationMenuLink>
+                        <NavigationMenuLink to={ROUTE_PATH.LOGIN}>Login</NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <NavigationMenuLink href={ROUTE_PATH.REGISTER}>Register</NavigationMenuLink>
+                        <NavigationMenuLink to={ROUTE_PATH.REGISTER}>Register</NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
