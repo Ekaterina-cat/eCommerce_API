@@ -10,7 +10,12 @@ import { useNavigate } from 'react-router';
 import LoginFormView from './LoginForm.view.tsx';
 
 const LoginFormContainer = (): JSX.Element => {
+    const loggedInErrorMessage = useUserStore((state) => state.loggedInErrorMessage);
     const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
+    const updateLoggedInErrorMessage = useUserStore((state) => state.updateLoggedInErrorMessage);
+    const errorCallback = (errorMessage: string): void => {
+        updateLoggedInErrorMessage(errorMessage);
+    };
     const navigate = useNavigate();
     const {
         register,
@@ -19,7 +24,7 @@ const LoginFormContainer = (): JSX.Element => {
         reset,
     } = useForm<LoginInputs>();
     const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }): Promise<void> => {
-        const customerResult = await clientService.login({ email, password });
+        const customerResult = await clientService.login({ email, password, errorCallback });
 
         if (customerResult) {
             updateIsLoggedIn(true);
@@ -30,7 +35,14 @@ const LoginFormContainer = (): JSX.Element => {
     };
     const handleFormSubmit = (event: FormEvent<HTMLFormElement>): void => void handleSubmit(onSubmit)(event);
 
-    return <LoginFormView register={register} errors={errors} handleFormSubmit={handleFormSubmit} />;
+    return (
+        <LoginFormView
+            register={register}
+            errors={errors}
+            handleFormSubmit={handleFormSubmit}
+            loggedInErrorMessage={loggedInErrorMessage}
+        />
+    );
 };
 
 export default LoginFormContainer;

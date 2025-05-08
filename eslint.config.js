@@ -64,7 +64,6 @@ export default [
             ],
             '@typescript-eslint/member-ordering': 'error',
             'prettier/prettier': ['error', prettierOptions],
-            'max-lines-per-function': ['error', { max: 40, skipComments: true, skipBlankLines: true }],
             'unicorn/no-null': 'off',
             'unicorn/filename-case': 'off',
             'unicorn/prevent-abbreviations': 'off',
