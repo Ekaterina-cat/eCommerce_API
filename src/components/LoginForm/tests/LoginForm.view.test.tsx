@@ -12,7 +12,14 @@ describe('LoginFormView', () => {
     const mockErrors: FieldErrors<LoginInputs> = {};
 
     it('renders LoginFormView', () => {
-        render(<LoginFormView register={mockRegister} errors={mockErrors} handleFormSubmit={mockHandleFormSubmit} />);
+        render(
+            <LoginFormView
+                register={mockRegister}
+                errors={mockErrors}
+                handleFormSubmit={mockHandleFormSubmit}
+                loggedInErrorMessage={'loggedInErrorMessage'}
+            />,
+        );
     });
 
     it('displays validation errors', () => {
@@ -27,7 +34,14 @@ describe('LoginFormView', () => {
             },
         };
 
-        render(<LoginFormView register={mockRegister} errors={mockErrors} handleFormSubmit={mockHandleFormSubmit} />);
+        render(
+            <LoginFormView
+                register={mockRegister}
+                errors={mockErrors}
+                handleFormSubmit={mockHandleFormSubmit}
+                loggedInErrorMessage={'loggedInErrorMessage'}
+            />,
+        );
 
         expect(screen.getByText(LoginFormErrorMessage.EmailRequired)).toBeDefined();
         expect(screen.getByText(LoginFormErrorMessage.PasswordMinLength)).toBeDefined();

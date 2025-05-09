@@ -55,7 +55,7 @@ export default [
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
             'unused-imports/no-unused-imports': 'warn',
-            '@typescript-eslint/consistent-type-imports': 'error',
+            '@typescript-eslint/consistent-type-imports': 'off',
             '@typescript-eslint/explicit-function-return-type': 'error',
             '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
             '@typescript-eslint/explicit-member-accessibility': [
