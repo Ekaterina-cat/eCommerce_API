@@ -4,7 +4,7 @@ import { ROUTE_PATH } from '@routes/constants/routes';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 
-export const Login = (): JSX.Element => {
+export const LoginNavigation = (): JSX.Element => {
     const navigate = useNavigate();
 
     const handleClick = (): void => {
@@ -12,9 +12,9 @@ export const Login = (): JSX.Element => {
     };
 
     return (
-        <div>
+        <>
             <LoginFormContainer />
             <Button onClick={handleClick}>TO LOGIN</Button>
-        </div>
+        </>
     );
 };
