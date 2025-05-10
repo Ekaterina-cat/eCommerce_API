@@ -1,8 +1,8 @@
 import Header from '@components/Header/Header.tsx';
-import { LoginNavigation } from '@pages/Login/Login.container';
+import { LoginNavigation } from '@pages/Login/Login.container.tsx';
 import { Main } from '@pages/Main/Main.tsx';
 import { NotFound } from '@pages/NotFound/NotFound.tsx';
-import { RegisterNavigation } from '@pages/Registerr/Register.container';
+import { RegisterNavigation } from '@pages/Registerr/Register.container.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes';
 import ProtectedRoute from '@routes/guards/ProtectedRoute.tsx';
 import type { JSX } from 'react';
