@@ -1,8 +1,8 @@
 import { Login } from '@pages/Login/Login.tsx';
 import { Main } from '@pages/Main/Main.tsx';
-import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import ProtectedRoute from '@routes/guards/ProtectedRoute';
-import { useUserStore } from '@store/store';
+import { useUserStore } from '@store/login.store.ts';
 import { render, screen } from '@testing-library/react';
 import type { JSX } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';

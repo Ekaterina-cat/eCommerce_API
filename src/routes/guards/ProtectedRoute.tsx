@@ -1,5 +1,5 @@
-import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
-import { useUserStore } from '@store/store.ts';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
+import { useUserStore } from '@store/login.store.ts';
 import type { JSX } from 'react';
 import { Navigate, Outlet } from 'react-router';
 

@@ -1,5 +1,5 @@
-import LoginFormContainer from '@components/LoginForm/LoginForm.container';
-import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
+import LoginFormContainer from '@components/LoginForm/LoginFormContainer';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, it } from 'vitest';

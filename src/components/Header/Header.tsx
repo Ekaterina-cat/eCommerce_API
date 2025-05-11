@@ -3,16 +3,14 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-} from '@components/ui/navigation-menu.tsx';
-import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
-import { useUserStore } from '@store/store.ts';
+} from '@components/ui/NavigationMenu.tsx';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
+import { useUserStore } from '@store/login.store.ts';
 import type { JSX } from 'react';
 
-interface HeaderViewProps {
-    onLogout: () => void;
-}
-
-const HeaderView = ({ onLogout }: HeaderViewProps): JSX.Element => {
+const Header = (): JSX.Element => {
+    const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
+    const handleLogout = (): void => updateIsLoggedIn(false);
     const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
     return (
@@ -23,7 +21,7 @@ const HeaderView = ({ onLogout }: HeaderViewProps): JSX.Element => {
                         <NavigationMenuLink to={ROUTE_PATH.MAIN}>Main</NavigationMenuLink>
                     </NavigationMenuItem>
                     {isLoggedIn ? (
-                        <button onClick={onLogout}>Logout</button>
+                        <button onClick={handleLogout}>Logout</button>
                     ) : (
                         <>
                             <NavigationMenuItem>
@@ -40,4 +38,4 @@ const HeaderView = ({ onLogout }: HeaderViewProps): JSX.Element => {
     );
 };
 
-export default HeaderView;
+export default Header;

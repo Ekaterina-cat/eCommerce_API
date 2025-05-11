@@ -1,4 +1,4 @@
-import { Alert as LibraryAlert, AlertDescription, AlertTitle } from '@components/ui/alert.tsx';
+import { Alert as LibraryAlert, AlertDescription, AlertTitle } from '@components/ui/Alert.tsx';
 import { AlertCircle } from 'lucide-react';
 import type { JSX } from 'react';
 
