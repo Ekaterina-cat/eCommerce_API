@@ -1,5 +1,6 @@
 import { Button } from '@components/ui/Button';
 import type { JSX } from 'react';
+
 interface RegisterProps {
     onLogin?: () => void;
 }
