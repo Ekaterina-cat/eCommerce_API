@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router';
 
 import { RegisterView } from './Register.view.tsx';
 
-export const RegisterNavigation = (): JSX.Element => {
+export const RegisterContainer = (): JSX.Element => {
     const navigate = useNavigate();
 
-    const handleClick = (): void => {
+    const handleNavigateToLogin = (): void => {
         void navigate(ROUTE_PATH.LOGIN);
     };
 
-    return <RegisterView onRegisterClick={handleClick} />;
+    return <RegisterView onLogin={handleNavigateToLogin} />;
 };

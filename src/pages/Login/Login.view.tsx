@@ -1,13 +1,15 @@
-import { Button } from '@components/ui/button-reusable';
+import LoginFormContainer from '@components/LoginForm/LoginFormContainer';
+import { Button } from '@components/ui/Button';
 import type { JSX } from 'react';
 interface LoginProps {
-    onLoginClick?: () => void;
+    onRegister?: () => void;
 }
 
-export const LoginView = ({ onLoginClick }: LoginProps): JSX.Element => {
+export const LoginView = ({ onRegister }: LoginProps): JSX.Element => {
     return (
         <div>
-            <Button onClick={onLoginClick}>TO LOGIN</Button>
+            <LoginFormContainer />
+            <Button onClick={onRegister}>TO REGISTER</Button>
         </div>
     );
 };
