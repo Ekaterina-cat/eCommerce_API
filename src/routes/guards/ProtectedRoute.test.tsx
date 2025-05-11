@@ -1,4 +1,4 @@
-import { LoginNavigation } from '@pages/Login/Login.container';
+import { LoginContainer } from '@pages/Login/Login.container';
 import { Main } from '@pages/Main/Main.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import ProtectedRoute from '@routes/guards/ProtectedRoute';
@@ -29,7 +29,7 @@ describe('ProtectedRoute', () => {
                 <Routes>
                     <Route path={ROUTE_PATH.MAIN} element={<Main />} />
                     <Route element={<ProtectedRoute />}>
-                        <Route path={ROUTE_PATH.LOGIN} element={<LoginNavigation />} />
+                        <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
                     </Route>
                 </Routes>
             </MemoryRouter>,
@@ -46,12 +46,12 @@ describe('ProtectedRoute', () => {
                 <Routes>
                     <Route path={ROUTE_PATH.MAIN} element={<Main />} />
                     <Route element={<ProtectedRoute />}>
-                        <Route path={ROUTE_PATH.LOGIN} element={<LoginNavigation />} />
+                        <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
                     </Route>
                 </Routes>
             </MemoryRouter>,
         );
 
-        expect(screen.getByText('TO LOGIN')).toBeDefined();
+        expect(screen.getByText('TO REGISTER')).toBeDefined();
     });
 });
