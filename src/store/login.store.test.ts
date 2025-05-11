@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useUserStore } from '@store/store.ts';
+import { useUserStore } from '@store/login.store.ts';
 
 describe('useUserStore', () => {
     beforeEach(() => {

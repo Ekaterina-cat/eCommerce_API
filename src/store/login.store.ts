@@ -13,7 +13,6 @@ type Action = {
 export const useUserStore = create<State & Action>((set) => ({
     isLoggedIn: false,
     loggedInErrorMessage: '',
-    updateIsLoggedIn: (isLoggedIn): void => set(() => ({ isLoggedIn: isLoggedIn })),
-    updateLoggedInErrorMessage: (loggedInErrorMessage): void =>
-        set(() => ({ loggedInErrorMessage: loggedInErrorMessage })),
+    updateIsLoggedIn: (isLoggedIn): void => set(() => ({ isLoggedIn })),
+    updateLoggedInErrorMessage: (loggedInErrorMessage): void => set(() => ({ loggedInErrorMessage })),
 }));

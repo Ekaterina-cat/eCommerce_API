@@ -1,4 +1,4 @@
-import LoginFormView from '@components/LoginForm/LoginForm.view.tsx';
+import LoginFormView from '@components/LoginForm/LoginFormView.tsx';
 import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
 import { LoginFormErrorMessage, ValidationRule } from '@components/LoginForm/types/LoginForm.ts';
 import { render, screen } from '@testing-library/react';

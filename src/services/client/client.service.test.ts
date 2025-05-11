@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-import { clientService } from '@services/client.service.ts';
+import { clientService } from '@services/client/client.service.ts';
 
 describe('ClientService', () => {
     const fakeCustomer = { email: 'test@email.com', password: 'test' };

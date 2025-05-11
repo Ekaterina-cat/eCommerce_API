@@ -1,13 +1,13 @@
 import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
-import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
-import { clientService } from '@services/client.service.ts';
-import { useUserStore } from '@store/store.ts';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
+import { clientService } from '@services/client/client.service.ts';
+import { useUserStore } from '@store/login.store.ts';
 import type { FormEvent, JSX } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import LoginFormView from './LoginForm.view.tsx';
+import LoginFormView from './LoginFormView.tsx';
 
 const LoginFormContainer = (): JSX.Element => {
     const loggedInErrorMessage = useUserStore((state) => state.loggedInErrorMessage);

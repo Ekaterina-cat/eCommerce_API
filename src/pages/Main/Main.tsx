@@ -3,8 +3,8 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-} from '@components/ui/navigation-menu.tsx';
-import { ROUTE_PATH } from '@routes/constants/routes.constant.ts';
+} from '@components/ui/NavigationMenu.tsx';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import type { JSX } from 'react';
 
 export const Main = (): JSX.Element => {

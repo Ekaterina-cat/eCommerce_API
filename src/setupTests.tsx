@@ -33,13 +33,17 @@ vi.mock('@commercetools/platform-sdk', async () => {
 
 vi.mock('@commercetools/ts-client', async () => {
     const actual = await vi.importActual<typeof import('@commercetools/ts-client')>('@commercetools/ts-client');
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const mockClient: Client = {
+        execute: vi.fn(),
+    } as unknown as Client;
+
     return {
         ...actual,
         ClientBuilder: vi.fn().mockImplementation(() => ({
             withPasswordFlow: vi.fn().mockReturnThis(),
             withHttpMiddleware: vi.fn().mockReturnThis(),
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-            build: vi.fn().mockReturnValue({} as unknown as Client),
+            build: vi.fn().mockReturnValue(mockClient),
         })),
     };
 });
