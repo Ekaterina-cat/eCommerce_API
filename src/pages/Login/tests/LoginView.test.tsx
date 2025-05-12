@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, it } from 'vitest';
 
-import { RegisterView } from '../Register.view.tsx';
+import { LoginView } from '../LoginView.tsx';
 
-describe('RegisterView', () => {
-    it('renders Register', () => {
+describe('LoginView', () => {
+    it('renders LoginView', () => {
         render(
             <MemoryRouter initialEntries={[ROUTE_PATH.LOGIN]}>
-                <RegisterView />
+                <LoginView />
             </MemoryRouter>,
         );
     });

@@ -8,9 +8,9 @@ interface LoginProps {
 
 export const LoginView = ({ onRegister }: LoginProps): JSX.Element => {
     return (
-        <div>
+        <>
             <LoginFormContainer />
             <Button onClick={onRegister}>TO REGISTER</Button>
-        </div>
+        </>
     );
 };

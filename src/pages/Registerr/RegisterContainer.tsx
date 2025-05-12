@@ -2,7 +2,7 @@ import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 
-import { RegisterView } from './Register.view.tsx';
+import { RegisterView } from './RegisterView.tsx';
 
 export const RegisterContainer = (): JSX.Element => {
     const navigate = useNavigate();
