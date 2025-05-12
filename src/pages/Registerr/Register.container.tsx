@@ -1,4 +1,4 @@
-import { ROUTE_PATH } from '@routes/constants/routes';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 

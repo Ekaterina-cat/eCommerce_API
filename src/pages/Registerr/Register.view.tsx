@@ -5,9 +5,5 @@ interface RegisterProps {
     onLogin?: () => void;
 }
 export const RegisterView = ({ onLogin }: RegisterProps): JSX.Element => {
-    return (
-        <div>
-            <Button onClick={onLogin}>TO LOGIN</Button>
-        </div>
-    );
+    return <Button onClick={onLogin}>TO LOGIN</Button>;
 };
