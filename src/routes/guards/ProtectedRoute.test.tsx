@@ -1,4 +1,4 @@
-import { LoginContainer } from '@pages/Login/Login.container';
+import { LoginContainer } from '@pages/Login/LoginContainer';
 import { Main } from '@pages/Main/Main.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import ProtectedRoute from '@routes/guards/ProtectedRoute';

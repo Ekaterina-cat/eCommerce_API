@@ -2,7 +2,7 @@ import { ROUTE_PATH } from '@routes/constants/routes';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 
-import { LoginView } from './Login.view';
+import { LoginView } from './LoginView';
 
 export const LoginContainer = (): JSX.Element => {
     const navigate = useNavigate();
@@ -11,9 +11,5 @@ export const LoginContainer = (): JSX.Element => {
         void navigate(ROUTE_PATH.REGISTER);
     };
 
-    return (
-        <>
-            <LoginView onRegister={handleNavigateToRegister} />
-        </>
-    );
+    return <LoginView onRegister={handleNavigateToRegister} />;
 };
