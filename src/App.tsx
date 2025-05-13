@@ -2,7 +2,7 @@ import Header from '@components/Header/Header.tsx';
 import { LoginContainer } from '@pages/Login/LoginContainer';
 import { Main } from '@pages/Main/Main.tsx';
 import { NotFound } from '@pages/NotFound/NotFound.tsx';
-import { RegisterContainer } from '@pages/Registerr/RegisterContainer';
+import { RegisterContainer } from '@pages/Registerr/RegisterContainer.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import ProtectedRoute from '@routes/guards/ProtectedRoute.tsx';
 import type { JSX } from 'react';
