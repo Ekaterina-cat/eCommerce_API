@@ -1,4 +1,6 @@
-import { isString } from '@utils/isString.ts';
+import { z } from 'zod';
+
+const stringSchema = z.string();
 
 class EnvService {
     public getProjectKey(): string {
@@ -26,11 +28,11 @@ class EnvService {
     }
 
     private getEnvVariable(variable: unknown): string {
-        if (isString(variable)) {
-            return variable;
+        try {
+            return stringSchema.parse(variable);
+        } catch {
+            return '';
         }
-
-        return '';
     }
 }
 
