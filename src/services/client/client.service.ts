@@ -1,15 +1,15 @@
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { ApiRoot, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import type { Client } from '@commercetools/ts-client';
 import { ClientBuilder } from '@commercetools/ts-client';
-import { Login, UserCredentials, UserInfo } from '@services/client/client.service.types.ts';
+import { CustomerInfo, Login, Register, UserCredentials, UserInfo } from '@services/client/client.service.types.ts';
 import { envService } from '@services/env.service.ts';
 import { tokenCacheService } from '@services/tokenCache.service.ts';
 
 class ClientService {
     public async login({ email, password, successCallback, errorCallback }: Login): Promise<UserInfo | undefined> {
         try {
-            const apiRoot = createApiBuilderFromCtpClient(this.getClient({ email, password }));
-            const response = await apiRoot
+            const client = this.getClientWithPasswordFlow({ email, password });
+            const response = await this.createApiRoot(client)
                 .withProjectKey({ projectKey: envService.getProjectKey() })
                 .login()
                 .post({
@@ -27,7 +27,7 @@ class ClientService {
                 tokenStore: tokenCacheService.getTokenStore(),
             };
 
-            if (!successCallback) return;
+            if (!successCallback) return userInfo;
 
             successCallback(userInfo);
 
@@ -35,15 +35,57 @@ class ClientService {
         } catch (error) {
             if (!errorCallback) return;
 
-            if (error instanceof Error) {
-                errorCallback(error.message);
-            } else if (typeof error === 'string') {
-                errorCallback(error);
-            }
+            errorCallback(this.handleError(error));
         }
     }
 
-    private getClient({ email, password }: UserCredentials): Client {
+    public async createCustomer({
+        customerData,
+        successCallback,
+        errorCallback,
+    }: Register): Promise<CustomerInfo | undefined> {
+        try {
+            const client = this.getClient();
+            const response = await this.createApiRoot(client)
+                .withProjectKey({ projectKey: envService.getProjectKey() })
+                .customers()
+                .post({ body: customerData })
+                .execute();
+
+            if (response.statusCode !== 200) return;
+
+            const customerInfo = {
+                customer: response.body.customer,
+                tokenStore: tokenCacheService.getTokenStore(),
+            };
+
+            if (!successCallback) return customerInfo;
+
+            successCallback(customerInfo);
+
+            return customerInfo;
+        } catch (error) {
+            if (!errorCallback) return;
+
+            errorCallback(this.handleError(error));
+        }
+    }
+
+    private getClient(): Client {
+        return new ClientBuilder()
+            .defaultClient(
+                envService.getBaseUrl(),
+                {
+                    clientId: envService.getClientId(),
+                    clientSecret: envService.getClientSecret(),
+                },
+                envService.getOauthUrl(),
+                envService.getProjectKey(),
+            )
+            .build();
+    }
+
+    private getClientWithPasswordFlow({ email, password }: UserCredentials): Client {
         return new ClientBuilder()
             .withPasswordFlow({
                 host: envService.getOauthUrl(),
@@ -65,6 +107,20 @@ class ClientService {
                 httpClient: fetch,
             })
             .build();
+    }
+
+    private createApiRoot(client: Client): ApiRoot {
+        return createApiBuilderFromCtpClient(client);
+    }
+
+    private handleError(error: unknown): string {
+        if (error instanceof Error) {
+            return error.message;
+        } else if (typeof error === 'string') {
+            return error;
+        }
+
+        return 'An unknown error occurred';
     }
 }
 
