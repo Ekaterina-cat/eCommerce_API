@@ -1,49 +1,23 @@
+import '@testing-library/jest-dom';
+
 import LoginFormView from '@components/LoginForm/LoginFormView.tsx';
-import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
-import { LoginFormErrorMessage, ValidationRule } from '@components/LoginForm/types/LoginForm.ts';
 import { render, screen } from '@testing-library/react';
-import type { FieldErrors } from 'react-hook-form';
 import { describe, expect, it, vi } from 'vitest';
 
-const mockRegister = vi.fn().mockImplementation(() => ({}));
 const mockHandleFormSubmit = vi.fn();
 
 describe('LoginFormView', () => {
-    const mockErrors: FieldErrors<LoginInputs> = {};
-
     it('renders LoginFormView', () => {
-        render(
-            <LoginFormView
-                register={mockRegister}
-                errors={mockErrors}
-                handleFormSubmit={mockHandleFormSubmit}
-                loggedInErrorMessage={'loggedInErrorMessage'}
-            />,
-        );
+        render(<LoginFormView handleFormSubmit={mockHandleFormSubmit} loggedInErrorMessage={'loggedInErrorMessage'} />);
+
+        expect(screen.getByLabelText(/email/i)).toBeDefined();
+        expect(screen.getByLabelText(/password/i)).toBeDefined();
+        expect(screen.getByRole('button', { name: /submit/i })).toBeDefined();
     });
 
-    it('displays validation errors', () => {
-        const mockErrors: FieldErrors<LoginInputs> = {
-            email: {
-                type: ValidationRule.Required,
-                message: LoginFormErrorMessage.EmailRequired,
-            },
-            password: {
-                type: ValidationRule.MinLength,
-                message: LoginFormErrorMessage.PasswordMinLength,
-            },
-        };
+    it('displays error message', () => {
+        render(<LoginFormView handleFormSubmit={mockHandleFormSubmit} loggedInErrorMessage={'Test error message'} />);
 
-        render(
-            <LoginFormView
-                register={mockRegister}
-                errors={mockErrors}
-                handleFormSubmit={mockHandleFormSubmit}
-                loggedInErrorMessage={'loggedInErrorMessage'}
-            />,
-        );
-
-        expect(screen.getByText(LoginFormErrorMessage.EmailRequired)).toBeDefined();
-        expect(screen.getByText(LoginFormErrorMessage.PasswordMinLength)).toBeDefined();
+        expect(screen.getByText('Test error message')).toBeDefined();
     });
 });

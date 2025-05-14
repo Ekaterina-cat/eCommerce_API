@@ -1,55 +1,74 @@
 import { Alert } from '@components/Alert/Alert.tsx';
 import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
 import { LoginFormErrorMessage, ValidationRule } from '@components/LoginForm/types/LoginForm.ts';
-import type { FormEvent, JSX } from 'react';
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Button } from '@components/ui/Button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form';
+import { Input } from '@components/ui/Input';
+import type { JSX } from 'react';
+import { useForm } from 'react-hook-form';
 
 type LoginFormViewProps = {
-    register: UseFormRegister<LoginInputs>;
-    errors: FieldErrors<LoginInputs>;
-    handleFormSubmit: (event: FormEvent<HTMLFormElement>) => void;
+    handleFormSubmit: (data: LoginInputs) => void;
     loggedInErrorMessage: string;
 };
 
-const LoginFormView = ({
-    register,
-    errors,
-    handleFormSubmit,
-    loggedInErrorMessage,
-}: LoginFormViewProps): JSX.Element => {
+const LoginFormView = ({ handleFormSubmit, loggedInErrorMessage }: LoginFormViewProps): JSX.Element => {
+    const form = useForm<LoginInputs>();
+
+    const onSubmit = (data: LoginInputs): void => {
+        handleFormSubmit(data);
+    };
+
     return (
         <>
-            <form className="form" onSubmit={handleFormSubmit}>
-                <div className="mb-6">
-                    <label className="label">Email</label>
-                    <input
-                        className="input"
-                        type="email"
-                        placeholder="test@email.com"
-                        {...register('email', { required: true })}
+            <Form {...form}>
+                <form
+                    onSubmit={(event) => {
+                        void form.handleSubmit(onSubmit)(event);
+                    }}
+                    className="space-y-6"
+                >
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input type="email" placeholder="test@email.com" {...field} />
+                                </FormControl>
+                                <FormMessage>
+                                    {form.formState.errors.email && LoginFormErrorMessage.EmailRequired}
+                                </FormMessage>
+                            </FormItem>
+                        )}
                     />
-                    {errors.email && <p role="alert">{LoginFormErrorMessage.EmailRequired}</p>}
-                </div>
-                <div className="mb-6">
-                    <label className="label">Password</label>
-                    <input
-                        className="input"
-                        type="password"
-                        {...register('password', { required: true, minLength: 2 })}
-                        aria-invalid={errors.password ? 'true' : 'false'}
+
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input type="password" {...field} />
+                                </FormControl>
+                                <FormMessage>
+                                    {form.formState.errors.password?.type === ValidationRule.Required
+                                        ? LoginFormErrorMessage.PasswordRequired
+                                        : form.formState.errors.password?.type === ValidationRule.MinLength
+                                          ? LoginFormErrorMessage.PasswordMinLength
+                                          : LoginFormErrorMessage.InvalidPassword}
+                                </FormMessage>
+                            </FormItem>
+                        )}
                     />
-                    {errors.password && (
-                        <p role="alert">
-                            {errors.password.type === ValidationRule.Required
-                                ? LoginFormErrorMessage.PasswordRequired
-                                : errors.password.type === ValidationRule.MinLength
-                                  ? LoginFormErrorMessage.PasswordMinLength
-                                  : LoginFormErrorMessage.InvalidPassword}
-                        </p>
-                    )}
-                </div>
-                <input className="mb-6 submitInput" type="submit" />
-            </form>
+
+                    <Button type="submit" className="w-full">
+                        Submit
+                    </Button>
+                </form>
+            </Form>
             <Alert errorMessage={loggedInErrorMessage} />
         </>
     );
