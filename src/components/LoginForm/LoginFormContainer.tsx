@@ -2,9 +2,7 @@ import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { clientService } from '@services/client/client.service.ts';
 import { useUserStore } from '@store/login.store.ts';
-import type { FormEvent, JSX } from 'react';
-import type { SubmitHandler } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 
 import LoginFormView from './LoginFormView.tsx';
@@ -17,29 +15,22 @@ const LoginFormContainer = (): JSX.Element => {
         updateLoggedInErrorMessage(errorMessage);
     };
     const navigate = useNavigate();
-    const {
-        register,
-        formState: { errors },
-        handleSubmit,
-        reset,
-    } = useForm<LoginInputs>();
-    const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }): Promise<void> => {
+
+    const handleFormSubmit = async (data: LoginInputs): Promise<void> => {
+        const { email, password } = data;
         const customerResult = await clientService.login({ email, password, errorCallback });
 
         if (customerResult) {
             updateIsLoggedIn(true);
             await navigate(ROUTE_PATH.MAIN);
         }
-
-        reset();
     };
-    const handleFormSubmit = (event: FormEvent<HTMLFormElement>): void => void handleSubmit(onSubmit)(event);
 
     return (
         <LoginFormView
-            register={register}
-            errors={errors}
-            handleFormSubmit={handleFormSubmit}
+            handleFormSubmit={(data) => {
+                void handleFormSubmit(data);
+            }}
             loggedInErrorMessage={loggedInErrorMessage}
         />
     );
