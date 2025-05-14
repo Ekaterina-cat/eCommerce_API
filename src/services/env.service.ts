@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-const stringSchema = z.string();
-
 class EnvService {
     public getProjectKey(): string {
         return this.getEnvVariable(import.meta.env.VITE_PROJECT_KEY);
@@ -29,7 +27,7 @@ class EnvService {
 
     private getEnvVariable(variable: unknown): string {
         try {
-            return stringSchema.parse(variable);
+            return z.string().parse(variable);
         } catch {
             return '';
         }
