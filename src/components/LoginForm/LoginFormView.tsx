@@ -1,70 +1,53 @@
 import { Alert } from '@components/Alert/Alert.tsx';
 import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
-import { LoginFormErrorMessage, ValidationRule } from '@components/LoginForm/types/LoginForm.ts';
+import { LoginFormErrorMessage } from '@components/LoginForm/types/LoginForm.ts';
 import { Button } from '@components/ui/Button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form';
-import { Input } from '@components/ui/Input';
-import type { JSX } from 'react';
-import { useForm } from 'react-hook-form';
+import { Form } from '@components/ui/Form';
+import { TextInput } from '@components/ui/TextInput';
+import type { FormEvent, JSX } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 
 type LoginFormViewProps = {
-    handleFormSubmit: (data: LoginInputs) => void;
+    form: UseFormReturn<LoginInputs>;
+    onSubmit: (data: LoginInputs) => Promise<void>;
     loggedInErrorMessage: string;
 };
 
-const LoginFormView = ({ handleFormSubmit, loggedInErrorMessage }: LoginFormViewProps): JSX.Element => {
-    const form = useForm<LoginInputs>();
-
-    const onSubmit = (data: LoginInputs): void => {
-        handleFormSubmit(data);
+const LoginFormView = ({ form, onSubmit, loggedInErrorMessage }: LoginFormViewProps): JSX.Element => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+        void form.handleSubmit(onSubmit)(event);
     };
 
     return (
         <>
             <Form {...form}>
-                <form
-                    onSubmit={(event) => {
-                        void form.handleSubmit(onSubmit)(event);
-                    }}
-                    className="space-y-6"
-                >
-                    <FormField
+                <form className="form" onSubmit={handleSubmit}>
+                    <TextInput
                         control={form.control}
                         name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input type="email" placeholder="test@email.com" {...field} />
-                                </FormControl>
-                                <FormMessage>
-                                    {form.formState.errors.email && LoginFormErrorMessage.EmailRequired}
-                                </FormMessage>
-                            </FormItem>
-                        )}
+                        label="Email"
+                        type="email"
+                        placeholder="test@email.com"
+                        rules={{ required: true }}
+                        errorMessage={LoginFormErrorMessage.EmailRequired}
                     />
 
-                    <FormField
+                    <TextInput
                         control={form.control}
                         name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input type="password" {...field} />
-                                </FormControl>
-                                <FormMessage>
-                                    {form.formState.errors.password?.type === ValidationRule.Required
-                                        ? LoginFormErrorMessage.PasswordRequired
-                                        : form.formState.errors.password?.type === ValidationRule.MinLength
-                                          ? LoginFormErrorMessage.PasswordMinLength
-                                          : LoginFormErrorMessage.InvalidPassword}
-                                </FormMessage>
-                            </FormItem>
-                        )}
+                        label="Password"
+                        type="password"
+                        rules={{ required: true, minLength: 2 }}
+                        errorMessage={(error: { type: string }) =>
+                            error.type === 'required'
+                                ? LoginFormErrorMessage.PasswordRequired
+                                : error.type === 'minLength'
+                                  ? LoginFormErrorMessage.PasswordMinLength
+                                  : LoginFormErrorMessage.InvalidPassword
+                        }
                     />
 
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="mb-6 submitInput">
                         Submit
                     </Button>
                 </form>
