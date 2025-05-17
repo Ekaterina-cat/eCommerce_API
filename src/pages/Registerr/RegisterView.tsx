@@ -1,4 +1,4 @@
-import { RegistrationForm } from '@components/RegistrationForm/RegistrationFormView';
+import { RegistrationFormContainer } from '@components/RegistrationForm/RegistrationFormContainer';
 import { Button } from '@components/ui/Button';
 import type { JSX } from 'react';
 
@@ -8,7 +8,7 @@ interface RegisterProps {
 export const RegisterView = ({ onLogin }: RegisterProps): JSX.Element => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
-            <RegistrationForm />
+            <RegistrationFormContainer />
             <Button onClick={onLogin} className="mt-4">
                 TO LOGIN
             </Button>
