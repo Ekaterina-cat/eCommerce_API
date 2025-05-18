@@ -15,6 +15,7 @@ export default defineConfig({
                 './src/lib',
                 '**/*/constants',
                 '**/*.types.ts',
+                'src/**/types/*',
             ],
             reporter: ['text', 'json-summary', 'json', 'html'],
             reportOnFailure: true,
