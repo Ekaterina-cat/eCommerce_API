@@ -2,7 +2,7 @@ import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { clientService } from '@services/client/client.service.ts';
 import { useUserStore } from '@store/login.store.ts';
-import type { JSX } from 'react';
+import React, { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
@@ -26,11 +26,17 @@ const LoginFormContainer = (): JSX.Element => {
 
         if (customerResult) {
             updateIsLoggedIn(true);
+            form.reset();
             await navigate(ROUTE_PATH.MAIN);
         }
     };
 
-    return <LoginFormView form={form} onSubmit={onSubmit} loggedInErrorMessage={loggedInErrorMessage} />;
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        void form.handleSubmit(onSubmit)(event);
+    };
+
+    return <LoginFormView form={form} onSubmit={handleSubmit} loggedInErrorMessage={loggedInErrorMessage} />;
 };
 
 export default LoginFormContainer;
