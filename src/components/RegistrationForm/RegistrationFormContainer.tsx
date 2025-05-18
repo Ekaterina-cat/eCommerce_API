@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { JSX } from 'react';
+import { FormEvent, JSX } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { RegistrationFormView } from './RegistrationFormView';
@@ -21,6 +21,9 @@ export const RegistrationFormContainer = (): JSX.Element => {
         },
     });
 
+    const handleRegisterFormSubmit = (event: FormEvent<HTMLFormElement>): void =>
+        void form.handleSubmit(onSubmit)(event);
+
     const onSubmit = (data: RegistrationFormData): void => {
         console.log(data);
     };
@@ -29,7 +32,7 @@ export const RegistrationFormContainer = (): JSX.Element => {
         <RegistrationFormView
             form={form}
             errors={form.formState.errors}
-            handleRegisterFormSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+            handleRegisterFormSubmit={handleRegisterFormSubmit}
         />
     );
 };

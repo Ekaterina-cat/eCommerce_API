@@ -21,13 +21,12 @@ export const formFields = [
         description: 'This is your email.',
     },
     { label: 'Password', name: 'password', type: 'password', placeholder: 'Password' },
-    { label: 'First Name', name: 'firstName', placeholder: 'First Name' },
-    { label: 'Last Name', name: 'lastName', placeholder: 'Last Name' },
+    { label: 'First Name', name: 'firstName', type: 'text', placeholder: 'First Name' },
+    { label: 'Last Name', name: 'lastName', type: 'text', placeholder: 'Last Name' },
     { label: 'Date of Birth', name: 'dateOfBirth', type: 'date', placeholder: '' },
-    { label: 'Street', name: 'street', placeholder: 'Street' },
-    { label: 'City', name: 'city', placeholder: 'City' },
-    { label: 'Postal Code', name: 'postalCode', placeholder: 'Postal Code' },
-    { label: 'Country', name: 'country', placeholder: 'Country' },
+    { label: 'Street', name: 'street', type: 'text', placeholder: 'Street' },
+    { label: 'City', name: 'city', type: 'text', placeholder: 'City' },
+    { label: 'Postal Code', name: 'postalCode', type: 'text', placeholder: 'Postal Code' },
 ] as const;
 
 export type FormField = (typeof formFields)[number];

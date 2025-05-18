@@ -1,3 +1,4 @@
+import { FormSelectInput } from '@components/FormSelectInput';
 import { FormTextInput } from '@components/FormTextInput';
 import { Button } from '@components/ui/Button';
 import { FormEvent, JSX } from 'react';
@@ -21,23 +22,24 @@ export const RegistrationFormView = ({
             <div className="flex justify-center">
                 <form onSubmit={handleRegisterFormSubmit} className="space-y-4 border p-4 rounded-lg">
                     {formFields.map((field, index) => {
-                        const isLastField = index === formFields.length - 1;
+                        const shouldRenderField = index < formFields.length - 1;
 
-                        return (
-                            <div key={field.name} className={`grid ${isLastField ? '' : 'mb-4'}`}>
+                        return shouldRenderField ? (
+                            <div key={field.name} className="grid mb-4">
                                 <FormTextInput
                                     label={field.label}
                                     name={field.name}
+                                    type={field.type}
                                     placeholder={field.placeholder}
                                     form={form}
                                     error={errors[field.name]}
                                 />
                             </div>
-                        );
+                        ) : null;
                     })}
 
                     <div className="grid grid-cols-2 gap-4 mb-4">
-                        {formFields.slice(-2).map((field) => (
+                        {formFields.slice(-1).map((field) => (
                             <FormTextInput
                                 key={field.name}
                                 label={field.label}
@@ -47,8 +49,11 @@ export const RegistrationFormView = ({
                                 error={errors[field.name]}
                             />
                         ))}
-                    </div>
 
+                        <div className="grid mb-4">
+                            <FormSelectInput form={form} label={'file.label'} name={'email'} />
+                        </div>
+                    </div>
                     <Button
                         type="submit"
                         variant="default"
