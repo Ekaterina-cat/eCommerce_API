@@ -1,8 +1,8 @@
+import { FormTextInput } from '@components/FormTextInput';
 import { Button } from '@components/ui/Button';
 import { FormEvent, JSX } from 'react';
 import { FieldErrors, FormProvider, UseFormReturn } from 'react-hook-form';
 
-import { FormTextInput } from './RegistrationFormContainer';
 import { RegistrationFormData } from './types/RegistrationForm';
 
 interface RegistrationFormViewProps {
