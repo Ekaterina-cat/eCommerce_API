@@ -3,7 +3,7 @@ import { Button } from '@components/ui/Button';
 import { FormEvent, JSX } from 'react';
 import { FieldErrors, FormProvider, UseFormReturn } from 'react-hook-form';
 
-import { RegistrationFormData } from './types/RegistrationForm';
+import { formFields, RegistrationFormData } from './types/RegistrationForm';
 
 interface RegistrationFormViewProps {
     form: UseFormReturn<RegistrationFormData>;
@@ -20,69 +20,35 @@ export const RegistrationFormView = ({
         <FormProvider {...form}>
             <div className="flex justify-center">
                 <form onSubmit={handleRegisterFormSubmit} className="space-y-4 border p-4 rounded-lg">
-                    <FormTextInput
-                        label="Email"
-                        name="email"
-                        type="email"
-                        placeholder="example@domain.com"
-                        description="This is your email."
-                        form={form}
-                        error={errors.email}
-                    />
-                    <FormTextInput
-                        label="Password"
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        form={form}
-                        error={errors.password}
-                    />
-                    <FormTextInput
-                        label="First Name"
-                        name="firstName"
-                        placeholder="First Name"
-                        form={form}
-                        error={errors.firstName}
-                    />
-                    <FormTextInput
-                        label="Last Name"
-                        name="lastName"
-                        placeholder="Last Name"
-                        form={form}
-                        error={errors.lastName}
-                    />
-                    <FormTextInput
-                        label="Date of Birth"
-                        name="dateOfBirth"
-                        type="date"
-                        placeholder={''}
-                        form={form}
-                        error={errors.dateOfBirth}
-                    />
-                    <FormTextInput
-                        label="Street"
-                        name="street"
-                        placeholder="Street"
-                        form={form}
-                        error={errors.street}
-                    />
-                    <FormTextInput label="City" name="city" placeholder="City" form={form} error={errors.city} />
-                    <div className="grid grid-cols-2 gap-4">
-                        <FormTextInput
-                            label="Postal Code"
-                            name="postalCode"
-                            placeholder="Postal Code"
-                            form={form}
-                            error={errors.postalCode}
-                        />
-                        <FormTextInput
-                            label="Country"
-                            name="country"
-                            placeholder="Country"
-                            form={form}
-                            error={errors.country}
-                        />
+                    {formFields.map((field, index) => {
+                        const isLastField = index === formFields.length - 1;
+
+                        return (
+                            <div key={field.name} className={`grid ${isLastField ? '' : 'mb-4'}`}>
+                                <FormTextInput
+                                    label={field.label}
+                                    name={field.name}
+                                    placeholder={field.placeholder}
+                                    form={form}
+                                    error={errors[field.name]}
+                                />
+                            </div>
+                        );
+                    })}
+
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                        {formFields.slice(-2).map((field) => (
+                            <FormTextInput
+                                key={field.name}
+                                label={field.label}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                form={form}
+                                error={errors[field.name]}
+                            />
+                        ))}
                     </div>
+
                     <Button
                         type="submit"
                         variant="default"
