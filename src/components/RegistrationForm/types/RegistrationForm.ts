@@ -12,6 +12,26 @@ export const enum RegistrationFormErrorMessage {
     PostalCodeRequired = 'Postal Code is required',
     CountryRequired = 'Country is required',
 }
+export const formFields = [
+    {
+        label: 'Email',
+        name: 'email',
+        type: 'email',
+        placeholder: 'example@domain.com',
+        description: 'This is your email.',
+    },
+    { label: 'Password', name: 'password', type: 'password', placeholder: 'Password' },
+    { label: 'First Name', name: 'firstName', placeholder: 'First Name' },
+    { label: 'Last Name', name: 'lastName', placeholder: 'Last Name' },
+    { label: 'Date of Birth', name: 'dateOfBirth', type: 'date', placeholder: '' },
+    { label: 'Street', name: 'street', placeholder: 'Street' },
+    { label: 'City', name: 'city', placeholder: 'City' },
+    { label: 'Postal Code', name: 'postalCode', placeholder: 'Postal Code' },
+    { label: 'Country', name: 'country', placeholder: 'Country' },
+] as const;
+
+export type FormField = (typeof formFields)[number];
+export type FormFieldNames = FormField['name'];
 
 export const validationRegistrationForm = z.object({
     email: z.string().email({ message: RegistrationFormErrorMessage.EmailRequired }),
@@ -52,7 +72,7 @@ export type RegistrationFormData = z.infer<typeof validationRegistrationForm>;
 export type FormInputProps = {
     label: string;
     type?: string;
-    name: keyof RegistrationFormData;
+    name: FormFieldNames;
     placeholder?: string;
     description?: string;
     form: UseFormReturn<RegistrationFormData>;
