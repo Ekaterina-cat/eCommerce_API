@@ -9,4 +9,5 @@ export type LoginInputs = {
 export type LoginFormViewProps = {
     form: UseFormReturn<LoginInputs>;
     onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    isLoading: boolean;
 };
