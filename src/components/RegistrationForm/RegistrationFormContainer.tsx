@@ -1,5 +1,5 @@
 import RegistrationFormView from '@components/RegistrationForm/RegistrationFormView.tsx';
-import { validationRegistrationForm } from '@components/RegistrationForm/types/RegistrationForm.ts';
+import { registrationValidationSchema } from '@components/RegistrationForm/validation/registrationValidationSchema.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clientService } from '@services/client/client.service.ts';
 import { FormEvent, JSX } from 'react';
@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const RegistrationFormContainer = (): JSX.Element => {
-    const form = useForm<z.infer<typeof validationRegistrationForm>>({
-        resolver: zodResolver(validationRegistrationForm),
+    const form = useForm<z.infer<typeof registrationValidationSchema>>({
+        resolver: zodResolver(registrationValidationSchema),
         defaultValues: {
             email: '',
             password: '',
@@ -22,7 +22,7 @@ const RegistrationFormContainer = (): JSX.Element => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof validationRegistrationForm>): Promise<void> => {
+    const onSubmit = async (values: z.infer<typeof registrationValidationSchema>): Promise<void> => {
         const { email, password, firstName, lastName, dateOfBirth, streetName, city, postalCode, country } = values;
 
         const customerResult = await clientService.createCustomer({

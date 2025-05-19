@@ -1,10 +1,13 @@
 import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
+import { loginValidationSchema } from '@components/LoginForm/validation/loginValidationSchema.ts';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { clientService } from '@services/client/client.service.ts';
 import { useUserStore } from '@store/login.store.ts';
 import React, { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { z } from 'zod';
 
 import LoginFormView from './LoginFormView.tsx';
 
@@ -14,8 +17,13 @@ const LoginFormContainer = (): JSX.Element => {
     const updateLoggedInErrorMessage = useUserStore((state) => state.updateLoggedInErrorMessage);
     const navigate = useNavigate();
 
-    const form = useForm<LoginInputs>();
-
+    const form = useForm<z.infer<typeof loginValidationSchema>>({
+        resolver: zodResolver(loginValidationSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
     const errorCallback = (errorMessage: string): void => {
         updateLoggedInErrorMessage(errorMessage);
     };
