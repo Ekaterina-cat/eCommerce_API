@@ -31,10 +31,10 @@ export const textFields: TextFieldConfig<RegisterFormData>[] = [
     { name: 'password', label: 'Password', type: 'password' },
     { name: 'firstName', label: 'First Name' },
     { name: 'lastName', label: 'Last Name' },
+    { name: 'dateOfBirth', label: 'Date of Birth', type: 'date' },
     { name: 'streetName', label: 'Street' },
     { name: 'city', label: 'City' },
     { name: 'postalCode', label: 'Postal Code' },
-    { name: 'dateOfBirth', label: 'Date of Birth', type: 'date' },
 ];
 
 export const countries = [
