@@ -52,7 +52,7 @@ class ClientService {
                 .post({ body: customerData })
                 .execute();
 
-            if (response.statusCode !== 200) return;
+            if (response.statusCode !== 201) return;
 
             const customerInfo = {
                 customer: response.body.customer,
