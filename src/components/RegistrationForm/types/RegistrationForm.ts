@@ -16,7 +16,6 @@ export type RegisterFormData = {
 export interface RegistrationFormViewProps {
     form: UseFormReturn<RegisterFormData>;
     handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
-    loggedInErrorMessage: string;
 }
 
 export type TextFieldConfig<T extends FieldValues> = {

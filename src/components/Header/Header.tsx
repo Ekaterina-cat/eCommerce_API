@@ -1,3 +1,4 @@
+import LoginPopover from '@components/LoginPopover/LoginPopover.tsx';
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -34,6 +35,7 @@ const Header = (): JSX.Element => {
                     )}
                 </NavigationMenuList>
             </NavigationMenu>
+            <LoginPopover />
         </header>
     );
 };

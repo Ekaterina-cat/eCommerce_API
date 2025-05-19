@@ -12,7 +12,6 @@ import { z } from 'zod';
 import LoginFormView from './LoginFormView.tsx';
 
 const LoginFormContainer = (): JSX.Element => {
-    const loggedInErrorMessage = useUserStore((state) => state.loggedInErrorMessage);
     const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
     const updateLoggedInErrorMessage = useUserStore((state) => state.updateLoggedInErrorMessage);
     const navigate = useNavigate();
@@ -44,7 +43,7 @@ const LoginFormContainer = (): JSX.Element => {
         void form.handleSubmit(onSubmit)(event);
     };
 
-    return <LoginFormView form={form} onSubmit={handleSubmit} loggedInErrorMessage={loggedInErrorMessage} />;
+    return <LoginFormView form={form} onSubmit={handleSubmit} />;
 };
 
 export default LoginFormContainer;

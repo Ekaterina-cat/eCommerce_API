@@ -1,4 +1,3 @@
-import { Alert } from '@components/Alert/Alert.tsx';
 import FormInput from '@components/FormInput/FormInput.tsx';
 import {
     countries,
@@ -11,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/Select.tsx';
 import { JSX } from 'react';
 
-const RegistrationFormView = ({ form, handleSubmit, loggedInErrorMessage }: RegistrationFormViewProps): JSX.Element => {
+const RegistrationFormView = ({ form, handleSubmit }: RegistrationFormViewProps): JSX.Element => {
     return (
         <>
             <Form {...form}>
@@ -55,7 +54,6 @@ const RegistrationFormView = ({ form, handleSubmit, loggedInErrorMessage }: Regi
                     <Button type="submit">Submit</Button>
                 </form>
             </Form>
-            <Alert errorMessage={loggedInErrorMessage} />
         </>
     );
 };

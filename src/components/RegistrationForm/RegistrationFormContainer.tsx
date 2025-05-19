@@ -26,7 +26,6 @@ const RegistrationFormContainer = (): JSX.Element => {
     });
     const navigate = useNavigate();
     const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
-    const loggedInErrorMessage = useUserStore((state) => state.loggedInErrorMessage);
     const updateLoggedInErrorMessage = useUserStore((state) => state.updateLoggedInErrorMessage);
 
     const onSubmit = async (values: z.infer<typeof registrationValidationSchema>): Promise<void> => {
@@ -48,12 +47,7 @@ const RegistrationFormContainer = (): JSX.Element => {
                     },
                 ],
             },
-            successCallback: (customer) => {
-                console.log({ customer });
-            },
-            errorCallback: (errorMessage) => {
-                updateLoggedInErrorMessage(errorMessage);
-            },
+            errorCallback: updateLoggedInErrorMessage,
         });
 
         if (customerResult) {
@@ -61,8 +55,6 @@ const RegistrationFormContainer = (): JSX.Element => {
             form.reset();
             await navigate(ROUTE_PATH.MAIN);
         }
-
-        form.reset();
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
@@ -70,7 +62,7 @@ const RegistrationFormContainer = (): JSX.Element => {
         void form.handleSubmit(onSubmit)(event);
     };
 
-    return <RegistrationFormView form={form} handleSubmit={handleSubmit} loggedInErrorMessage={loggedInErrorMessage} />;
+    return <RegistrationFormView form={form} handleSubmit={handleSubmit} />;
 };
 
 export default RegistrationFormContainer;

@@ -1,18 +1,10 @@
-import { Alert } from '@components/Alert/Alert.tsx';
 import FormInput from '@components/FormInput/FormInput.tsx';
-import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
+import { LoginFormViewProps } from '@components/LoginForm/types/LoginForm.ts';
 import { Button } from '@components/ui/Button';
 import { Form } from '@components/ui/Form';
-import React, { JSX } from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import { JSX } from 'react';
 
-type LoginFormViewProps = {
-    form: UseFormReturn<LoginInputs>;
-    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    loggedInErrorMessage: string;
-};
-
-const LoginFormView = ({ form, onSubmit, loggedInErrorMessage }: LoginFormViewProps): JSX.Element => {
+const LoginFormView = ({ form, onSubmit }: LoginFormViewProps): JSX.Element => {
     return (
         <>
             <Form {...form}>
@@ -39,7 +31,6 @@ const LoginFormView = ({ form, onSubmit, loggedInErrorMessage }: LoginFormViewPr
                     </Button>
                 </form>
             </Form>
-            <Alert errorMessage={loggedInErrorMessage} />
         </>
     );
 };
