@@ -14,7 +14,7 @@ type FormInputProps<T extends FieldValues> = {
 };
 
 const FormInput = <T extends FieldValues>(props: FormInputProps<T>): JSX.Element => {
-    const { control, name, label, placeholder, description } = props;
+    const { control, name, label, placeholder, description, type = 'text' } = props;
 
     return (
         <FormField
@@ -24,7 +24,7 @@ const FormInput = <T extends FieldValues>(props: FormInputProps<T>): JSX.Element
                 <FormItem>
                     {label && <FormLabel>{label}</FormLabel>}
                     <FormControl>
-                        <Input placeholder={placeholder} {...field} />
+                        <Input type={type} placeholder={placeholder} {...field} />
                     </FormControl>
                     {description && <FormDescription>{description}</FormDescription>}
                     <FormMessage />
