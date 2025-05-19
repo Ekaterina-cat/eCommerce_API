@@ -1,9 +1,12 @@
 import RegistrationFormView from '@components/RegistrationForm/RegistrationFormView.tsx';
 import { registrationValidationSchema } from '@components/RegistrationForm/validation/registrationValidationSchema.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { clientService } from '@services/client/client.service.ts';
+import { useUserStore } from '@store/login.store.ts';
 import { FormEvent, JSX } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { z } from 'zod';
 
 const RegistrationFormContainer = (): JSX.Element => {
@@ -21,6 +24,10 @@ const RegistrationFormContainer = (): JSX.Element => {
             country: '',
         },
     });
+    const navigate = useNavigate();
+    const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
+    const loggedInErrorMessage = useUserStore((state) => state.loggedInErrorMessage);
+    const updateLoggedInErrorMessage = useUserStore((state) => state.updateLoggedInErrorMessage);
 
     const onSubmit = async (values: z.infer<typeof registrationValidationSchema>): Promise<void> => {
         const { email, password, firstName, lastName, dateOfBirth, streetName, city, postalCode, country } = values;
@@ -45,22 +52,25 @@ const RegistrationFormContainer = (): JSX.Element => {
                 console.log({ customer });
             },
             errorCallback: (errorMessage) => {
-                console.log({ errorMessage });
+                updateLoggedInErrorMessage(errorMessage);
             },
         });
 
         if (customerResult) {
-            console.log({ customerResult });
+            updateIsLoggedIn(true);
+            form.reset();
+            await navigate(ROUTE_PATH.MAIN);
         }
 
         form.reset();
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
         void form.handleSubmit(onSubmit)(event);
     };
 
-    return <RegistrationFormView form={form} handleSubmit={handleSubmit} />;
+    return <RegistrationFormView form={form} handleSubmit={handleSubmit} loggedInErrorMessage={loggedInErrorMessage} />;
 };
 
 export default RegistrationFormContainer;
