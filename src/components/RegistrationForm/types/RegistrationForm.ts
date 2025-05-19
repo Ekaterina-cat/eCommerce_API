@@ -1,79 +1,104 @@
-import { FieldError, UseFormReturn } from 'react-hook-form';
+import { FormEvent } from 'react';
+import { FieldPath, FieldValues, UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 
-export const enum RegistrationFormErrorMessage {
-    EmailRequired = 'Email is required',
-    PasswordRequired = 'Password is required',
-    FirstNameRequired = 'First Name is required',
-    LastNameRequired = 'Last Name is required',
-    DateOfBirthRequired = 'Date of Birth is required',
-    StreetRequired = 'Street is required',
-    CityRequired = 'City is required',
-    PostalCodeRequired = 'Postal Code is required',
-    CountryRequired = 'Country is required',
-}
-export const formFields = [
-    {
-        label: 'Email',
-        name: 'email',
-        type: 'email',
-        placeholder: 'example@domain.com',
-        description: 'This is your email.',
+const errorMessages = {
+    required: {
+        email: 'Email is required',
+        password: 'Password is required',
+        firstName: 'First Name is required',
+        lastName: 'Last Name is required',
+        dateOfBirth: 'Date of Birth is required',
+        streetName: 'Street is required',
+        city: 'City is required',
+        postalCode: 'Postal Code is required',
+        country: 'Country is required',
     },
-    { label: 'Password', name: 'password', type: 'password', placeholder: 'Password' },
-    { label: 'First Name', name: 'firstName', type: 'text', placeholder: 'First Name' },
-    { label: 'Last Name', name: 'lastName', type: 'text', placeholder: 'Last Name' },
-    { label: 'Date of Birth', name: 'dateOfBirth', type: 'date', placeholder: '' },
-    { label: 'Street', name: 'street', type: 'text', placeholder: 'Street' },
-    { label: 'City', name: 'city', type: 'text', placeholder: 'City' },
-    { label: 'Postal Code', name: 'postalCode', type: 'text', placeholder: 'Postal Code' },
-] as const;
-
-export type FormField = (typeof formFields)[number];
-export type FormFieldNames = FormField['name'];
+    custom: {
+        email: 'Email must be valid',
+        passwordMinLength: 'Password must be at least 8 characters long',
+        passwordUppercase: 'Password must contain at least one uppercase letter',
+        passwordLowercase: 'Password must contain at least one lowercase letter',
+        passwordNumber: 'Password must contain at least one number',
+        firstName: 'First name must contain only letters',
+        lastName: 'Last name must contain only letters',
+        dateOfBirth: 'You must be at least 13 years old',
+        city: 'City must contain only letters',
+    },
+};
 
 export const validationRegistrationForm = z.object({
-    email: z.string().email({ message: RegistrationFormErrorMessage.EmailRequired }),
+    email: z.string({ required_error: errorMessages.required.email }).email({ message: errorMessages.custom.email }),
     password: z
         .string()
-        .min(8, { message: 'Password must be at least 8 characters long' })
-        .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
-        .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
-        .regex(/[0-9]/, { message: 'Password must contain at least one number' }),
+        .min(8, { message: errorMessages.custom.passwordMinLength })
+        .regex(/[A-Z]/, { message: errorMessages.custom.passwordUppercase })
+        .regex(/[a-z]/, { message: errorMessages.custom.passwordLowercase })
+        .regex(/[0-9]/, { message: errorMessages.custom.passwordNumber }),
     firstName: z
         .string()
-        .min(1, { message: RegistrationFormErrorMessage.FirstNameRequired })
-        .regex(/^[A-Za-z]+$/, { message: 'First name must contain only letters' }),
+        .min(1, { message: errorMessages.required.firstName })
+        .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.firstName }),
     lastName: z
         .string()
-        .min(1, { message: RegistrationFormErrorMessage.LastNameRequired })
-        .regex(/^[A-Za-z]+$/, { message: 'Last name must contain only letters' }),
+        .min(1, { message: errorMessages.required.lastName })
+        .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.lastName }),
     dateOfBirth: z.string().refine(
         (val) => {
-            const dob = new Date(val);
+            const dateOfBirth = new Date(val);
             const today = new Date();
-            const age = today.getFullYear() - dob.getFullYear();
+            const age = today.getFullYear() - dateOfBirth.getFullYear();
+
             return age >= 13;
         },
-        { message: 'You must be at least 13 years old' },
+        { message: errorMessages.custom.dateOfBirth },
     ),
-    street: z.string().min(1, { message: RegistrationFormErrorMessage.StreetRequired }),
+    streetName: z.string().min(1, { message: errorMessages.required.streetName }),
     city: z
         .string()
-        .min(1, { message: RegistrationFormErrorMessage.CityRequired })
-        .regex(/^[A-Za-z]+$/, { message: 'City must contain only letters' }),
-    postalCode: z.string().min(1, { message: RegistrationFormErrorMessage.PostalCodeRequired }),
-    country: z.string().min(1, { message: RegistrationFormErrorMessage.CountryRequired }),
+        .min(1, { message: errorMessages.required.city })
+        .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.city }),
+    postalCode: z.string().min(1, { message: errorMessages.required.postalCode }),
+    country: z.string().min(1, { message: errorMessages.required.country }),
 });
 
-export type RegistrationFormData = z.infer<typeof validationRegistrationForm>;
-
-export type FormInputProps = {
-    label: string;
-    type?: string;
-    name: FormFieldNames;
-    placeholder?: string;
-    description?: string;
-    form: UseFormReturn<RegistrationFormData>;
-    error?: FieldError;
+export type RegisterFormData = {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    streetName: string;
+    city: string;
+    postalCode: string;
+    country: string;
 };
+
+export interface RegistrationFormViewProps {
+    form: UseFormReturn<RegisterFormData>;
+    handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+}
+
+export type TextFieldConfig<T extends FieldValues> = {
+    name: FieldPath<T>;
+    label: string;
+    placeholder?: string;
+    type?: string;
+};
+
+export const textFields: TextFieldConfig<RegisterFormData>[] = [
+    { name: 'email', label: 'Email', placeholder: 'test@test.com', type: 'email' },
+    { name: 'password', label: 'Password', type: 'password' },
+    { name: 'firstName', label: 'First Name' },
+    { name: 'lastName', label: 'Last Name' },
+    { name: 'streetName', label: 'Street' },
+    { name: 'city', label: 'City' },
+    { name: 'postalCode', label: 'Postal Code' },
+    { name: 'dateOfBirth', label: 'Date of Birth', type: 'date' },
+];
+
+export const countries = [
+    { label: 'Belarus', value: 'BY' },
+    { label: 'Poland', value: 'PL' },
+    { label: 'Germany', value: 'DE' },
+];

@@ -1,52 +1,16 @@
 import FormInput from '@components/FormInput/FormInput.tsx';
+import {
+    countries,
+    RegisterFormData,
+    RegistrationFormViewProps,
+    textFields,
+} from '@components/RegistrationForm/types/RegistrationForm.ts';
 import { Button } from '@components/ui/Button.tsx';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form.tsx';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/Select.tsx';
-import { FormEvent, JSX } from 'react';
-import { FieldPath, FieldValues, UseFormReturn } from 'react-hook-form';
+import { JSX } from 'react';
 
-type RegisterFormData = {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    dateOfBirth: string;
-    streetName: string;
-    city: string;
-    postalCode: string;
-    country: string;
-};
-
-interface RegisterFormViewProps {
-    form: UseFormReturn<RegisterFormData>;
-    handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
-}
-
-type TextFieldConfig<T extends FieldValues> = {
-    name: FieldPath<T>;
-    label: string;
-    placeholder?: string;
-    type?: string;
-};
-
-const textFields: TextFieldConfig<RegisterFormData>[] = [
-    { name: 'email', label: 'Email', placeholder: 'test@test.com', type: 'email' },
-    { name: 'password', label: 'Password', type: 'password' },
-    { name: 'firstName', label: 'First Name' },
-    { name: 'lastName', label: 'Last Name' },
-    { name: 'streetName', label: 'Street' },
-    { name: 'city', label: 'City' },
-    { name: 'postalCode', label: 'Postal Code' },
-    { name: 'dateOfBirth', label: 'Date of Birth', type: 'date' },
-];
-
-const countries = [
-    { label: 'Belarus', value: 'BY' },
-    { label: 'Poland', value: 'PL' },
-    { label: 'Germany', value: 'DE' },
-];
-
-const RegisterFormView = ({ form, handleSubmit }: RegisterFormViewProps): JSX.Element => {
+const RegistrationFormView = ({ form, handleSubmit }: RegistrationFormViewProps): JSX.Element => {
     return (
         <Form {...form}>
             <form onSubmit={handleSubmit} className="space-y-4 border p-4 rounded-lg w-full">
@@ -92,4 +56,4 @@ const RegisterFormView = ({ form, handleSubmit }: RegisterFormViewProps): JSX.El
     );
 };
 
-export default RegisterFormView;
+export default RegistrationFormView;
