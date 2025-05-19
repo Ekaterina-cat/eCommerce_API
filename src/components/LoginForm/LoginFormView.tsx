@@ -1,11 +1,10 @@
 import { Alert } from '@components/Alert/Alert.tsx';
+import FormInput from '@components/FormInput/FormInput.tsx';
 import type { LoginInputs } from '@components/LoginForm/types/LoginForm.ts';
 import { Button } from '@components/ui/Button';
 import { Form } from '@components/ui/Form';
 import React, { JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-
-import { LoginFormInput } from './LoginFormInput';
 
 type LoginFormViewProps = {
     form: UseFormReturn<LoginInputs>;
@@ -18,8 +17,8 @@ const LoginFormView = ({ form, onSubmit, loggedInErrorMessage }: LoginFormViewPr
         <>
             <Form {...form}>
                 <form className="form space-y-4" onSubmit={onSubmit}>
-                    <LoginFormInput
-                        form={form}
+                    <FormInput
+                        control={form.control}
                         name="email"
                         label="Email"
                         type="email"
@@ -27,8 +26,8 @@ const LoginFormView = ({ form, onSubmit, loggedInErrorMessage }: LoginFormViewPr
                         error={form.formState.errors.email}
                     />
 
-                    <LoginFormInput
-                        form={form}
+                    <FormInput
+                        control={form.control}
                         name="password"
                         label="Password"
                         type="password"
