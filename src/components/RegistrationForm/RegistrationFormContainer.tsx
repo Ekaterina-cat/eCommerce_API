@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { clientService } from '@services/client/client.service.ts';
 import { useUserStore } from '@store/login.store.ts';
-import { FormEvent, JSX } from 'react';
+import { FormEvent, JSX, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod';
@@ -27,8 +27,11 @@ const RegistrationFormContainer = (): JSX.Element => {
     const navigate = useNavigate();
     const updateIsLoggedIn = useUserStore((state) => state.updateIsLoggedIn);
     const updateLoggedInErrorMessage = useUserStore((state) => state.updateLoggedInErrorMessage);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (values: z.infer<typeof registrationValidationSchema>): Promise<void> => {
+        setIsLoading(true);
+
         const { email, password, firstName, lastName, dateOfBirth, streetName, city, postalCode, country } = values;
 
         const customerResult = await clientService.createCustomer({
@@ -47,7 +50,10 @@ const RegistrationFormContainer = (): JSX.Element => {
                     },
                 ],
             },
-            errorCallback: updateLoggedInErrorMessage,
+            errorCallback: (errorMessage) => {
+                updateLoggedInErrorMessage(errorMessage);
+                setIsLoading(false);
+            },
         });
 
         if (customerResult) {
@@ -55,6 +61,8 @@ const RegistrationFormContainer = (): JSX.Element => {
             form.reset();
             await navigate(ROUTE_PATH.MAIN);
         }
+
+        setIsLoading(false);
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
@@ -62,7 +70,7 @@ const RegistrationFormContainer = (): JSX.Element => {
         void form.handleSubmit(onSubmit)(event);
     };
 
-    return <RegistrationFormView form={form} handleSubmit={handleSubmit} />;
+    return <RegistrationFormView form={form} handleSubmit={handleSubmit} isLoading={isLoading} />;
 };
 
 export default RegistrationFormContainer;

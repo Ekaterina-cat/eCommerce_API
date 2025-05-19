@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/Select.tsx';
 import { JSX } from 'react';
 
-const RegistrationFormView = ({ form, handleSubmit }: RegistrationFormViewProps): JSX.Element => {
+const RegistrationFormView = ({ form, handleSubmit, isLoading }: RegistrationFormViewProps): JSX.Element => {
     return (
         <>
             <Form {...form}>
@@ -51,7 +51,9 @@ const RegistrationFormView = ({ form, handleSubmit }: RegistrationFormViewProps)
                         )}
                     />
 
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" disabled={isLoading}>
+                        Submit
+                    </Button>
                 </form>
             </Form>
         </>

@@ -4,7 +4,7 @@ import { Button } from '@components/ui/Button';
 import { Form } from '@components/ui/Form';
 import { JSX } from 'react';
 
-const LoginFormView = ({ form, onSubmit }: LoginFormViewProps): JSX.Element => {
+const LoginFormView = ({ form, onSubmit, isLoading }: LoginFormViewProps): JSX.Element => {
     return (
         <>
             <Form {...form}>
@@ -26,7 +26,7 @@ const LoginFormView = ({ form, onSubmit }: LoginFormViewProps): JSX.Element => {
                         error={form.formState.errors.password}
                     />
 
-                    <Button type="submit" className="mb-6 submitInput">
+                    <Button type="submit" className="mb-6 submitInput" disabled={isLoading}>
                         Submit
                     </Button>
                 </form>
