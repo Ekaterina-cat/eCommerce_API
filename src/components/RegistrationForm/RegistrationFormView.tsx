@@ -1,3 +1,4 @@
+import Checkbox from '@components/Checkbox/Checkbox.tsx';
 import FormInput from '@components/FormInput/FormInput.tsx';
 import {
     countries,
@@ -7,7 +8,6 @@ import {
     RegistrationFormViewProps,
 } from '@components/RegistrationForm/types/RegistrationForm.ts';
 import { Button } from '@components/ui/Button.tsx';
-import { Checkbox } from '@components/ui/Checkbox.tsx';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form.tsx';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/Select.tsx';
 import { JSX } from 'react';
@@ -66,19 +66,16 @@ const RegistrationFormView = ({ form, handleSubmit, isLoading }: RegistrationFor
                             )}
                         />
 
-                        <FormField
+                        <Checkbox
                             control={form.control}
                             name="defaultShippingAddress"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-                                    <FormControl>
-                                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                                    </FormControl>
-                                    <div className="space-y-1 leading-none">
-                                        <FormLabel>Set as default delivery address</FormLabel>
-                                    </div>
-                                </FormItem>
-                            )}
+                            label="Set as default delivery address"
+                        />
+
+                        <Checkbox
+                            control={form.control}
+                            name="useAsBillingAddress"
+                            label="Use delivery address as billing address"
                         />
                     </div>
 

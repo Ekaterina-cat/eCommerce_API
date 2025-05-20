@@ -1,3 +1,4 @@
+import { CustomerUpdateAction } from '@commercetools/platform-sdk';
 import RegistrationFormView from '@components/RegistrationForm/RegistrationFormView.tsx';
 import { registrationValidationSchema } from '@components/RegistrationForm/validation/registrationValidationSchema.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,6 +24,7 @@ const RegistrationFormContainer = (): JSX.Element => {
             postalCode: '',
             country: '',
             defaultShippingAddress: true,
+            useAsBillingAddress: true,
         },
     });
     const navigate = useNavigate();
@@ -33,18 +35,7 @@ const RegistrationFormContainer = (): JSX.Element => {
     const onSubmit = async (values: z.infer<typeof registrationValidationSchema>): Promise<void> => {
         setIsLoading(true);
 
-        const {
-            email,
-            password,
-            firstName,
-            lastName,
-            dateOfBirth,
-            streetName,
-            city,
-            postalCode,
-            country,
-            defaultShippingAddress,
-        } = values;
+        const { email, password, firstName, lastName, dateOfBirth, streetName, city, postalCode, country } = values;
 
         const customerResult = await clientService.createCustomer({
             customerData: {
@@ -71,11 +62,28 @@ const RegistrationFormContainer = (): JSX.Element => {
         if (customerResult) {
             const address = customerResult.customer.addresses?.[0];
 
-            if (defaultShippingAddress && address?.id) {
-                await clientService.setDefaultAddress({
+            const actions: CustomerUpdateAction[] = [];
+
+            if (values.defaultShippingAddress && address?.id) {
+                actions.push({
+                    action: 'setDefaultShippingAddress',
+                    addressId: address.id,
+                });
+            }
+
+            if (values.useAsBillingAddress && address?.id) {
+                actions.push({
+                    action: 'setDefaultBillingAddress',
+                    addressId: address.id,
+                });
+            }
+
+            if (actions.length > 0) {
+                await clientService.updateCustomer({
                     customerId: customerResult.customer.id,
                     version: customerResult.customer.version,
-                    addressId: address.id,
+                    actions,
+                    errorCallback: updateLoggedInErrorMessage,
                 });
             }
 

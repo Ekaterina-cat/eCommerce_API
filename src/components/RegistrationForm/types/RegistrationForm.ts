@@ -12,6 +12,7 @@ export type RegisterFormData = {
     postalCode: string;
     country: string;
     defaultShippingAddress?: boolean;
+    useAsBillingAddress?: boolean;
 };
 
 export interface RegistrationFormViewProps {

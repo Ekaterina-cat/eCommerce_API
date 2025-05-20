@@ -3,9 +3,9 @@ import type { Client } from '@commercetools/ts-client';
 import { ClientBuilder } from '@commercetools/ts-client';
 import {
     CustomerInfo,
-    DefaultAddress,
     Login,
     Register,
+    UpdateCustomer,
     UserCredentials,
     UserInfo,
 } from '@services/client/client.service.types.ts';
@@ -78,7 +78,7 @@ class ClientService {
         }
     }
 
-    public async setDefaultAddress({ customerId, version, addressId, errorCallback }: DefaultAddress): Promise<void> {
+    public async updateCustomer({ customerId, version, actions, errorCallback }: UpdateCustomer): Promise<void> {
         try {
             const client = this.getClient();
             await this.createApiRoot(client)
@@ -88,19 +88,14 @@ class ClientService {
                 .post({
                     body: {
                         version,
-                        actions: [
-                            {
-                                action: 'setDefaultShippingAddress',
-                                addressId,
-                            },
-                        ],
+                        actions,
                     },
                 })
                 .execute();
         } catch (error) {
-            if (!errorCallback) return;
-
-            errorCallback(this.handleError(error));
+            if (errorCallback) {
+                errorCallback(this.handleError(error));
+            }
         }
     }
 
