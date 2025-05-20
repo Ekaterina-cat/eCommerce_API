@@ -1,7 +1,14 @@
 import { ApiRoot, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import type { Client } from '@commercetools/ts-client';
 import { ClientBuilder } from '@commercetools/ts-client';
-import { CustomerInfo, Login, Register, UserCredentials, UserInfo } from '@services/client/client.service.types.ts';
+import {
+    CustomerInfo,
+    DefaultAddress,
+    Login,
+    Register,
+    UserCredentials,
+    UserInfo,
+} from '@services/client/client.service.types.ts';
 import { envService } from '@services/env.service.ts';
 import { tokenCacheService } from '@services/tokenCache.service.ts';
 
@@ -64,6 +71,32 @@ class ClientService {
             successCallback(customerInfo);
 
             return customerInfo;
+        } catch (error) {
+            if (!errorCallback) return;
+
+            errorCallback(this.handleError(error));
+        }
+    }
+
+    public async setDefaultAddress({ customerId, version, addressId, errorCallback }: DefaultAddress): Promise<void> {
+        try {
+            const client = this.getClient();
+            await this.createApiRoot(client)
+                .withProjectKey({ projectKey: envService.getProjectKey() })
+                .customers()
+                .withId({ ID: customerId })
+                .post({
+                    body: {
+                        version,
+                        actions: [
+                            {
+                                action: 'setDefaultShippingAddress',
+                                addressId,
+                            },
+                        ],
+                    },
+                })
+                .execute();
         } catch (error) {
             if (!errorCallback) return;
 

@@ -11,6 +11,7 @@ export type RegisterFormData = {
     city: string;
     postalCode: string;
     country: string;
+    defaultShippingAddress?: boolean;
 };
 
 export interface RegistrationFormViewProps {
@@ -26,12 +27,15 @@ export type TextFieldConfig<T extends FieldValues> = {
     type?: string;
 };
 
-export const textFields: TextFieldConfig<RegisterFormData>[] = [
+export const customerDataFields: TextFieldConfig<RegisterFormData>[] = [
     { name: 'email', label: 'Email', placeholder: 'test@test.com', type: 'email' },
     { name: 'password', label: 'Password', type: 'password' },
     { name: 'firstName', label: 'First Name' },
     { name: 'lastName', label: 'Last Name' },
     { name: 'dateOfBirth', label: 'Date of Birth', type: 'date' },
+];
+
+export const customerAddress: TextFieldConfig<RegisterFormData>[] = [
     { name: 'streetName', label: 'Street' },
     { name: 'city', label: 'City' },
     { name: 'postalCode', label: 'Postal Code' },

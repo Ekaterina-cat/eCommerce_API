@@ -51,4 +51,5 @@ export const registrationValidationSchema = z.object({
         .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.city }),
     postalCode: z.string().trim().min(1, { message: errorMessages.required.postalCode }),
     country: z.string().trim().min(1, { message: errorMessages.required.country }),
+    defaultShippingAddress: z.boolean().optional(),
 });
