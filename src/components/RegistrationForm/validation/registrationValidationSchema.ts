@@ -52,4 +52,5 @@ export const registrationValidationSchema = z.object({
     postalCode: z.string().trim().min(1, { message: errorMessages.required.postalCode }),
     country: z.string().trim().min(1, { message: errorMessages.required.country }),
     defaultShippingAddress: z.boolean().optional(),
+    useAsBillingAddress: z.boolean().optional(),
 });

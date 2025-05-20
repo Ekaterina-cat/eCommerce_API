@@ -1,4 +1,4 @@
-import type { Customer } from '@commercetools/platform-sdk';
+import { Customer, CustomerUpdateAction } from '@commercetools/platform-sdk';
 import type { TokenCacheOptions } from '@commercetools/ts-client';
 
 interface TokenStore {
@@ -48,9 +48,9 @@ export interface CustomerInfo {
     tokenStore: TokenStore;
 }
 
-export interface DefaultAddress {
+export interface UpdateCustomer {
     customerId: string;
     version: number;
-    addressId: string;
+    actions: CustomerUpdateAction[];
     errorCallback?: (errorMessage: string) => void;
 }
