@@ -1,6 +1,8 @@
 import Checkbox from '@components/Checkbox/Checkbox.tsx';
 import FormInput from '@components/FormInput/FormInput.tsx';
+import { FiledName, Label, Placeholder } from '@components/RegistrationForm/constants/registerForm.ts';
 import {
+    billingAddress,
     countries,
     customerAddress,
     customerDataFields,
@@ -8,11 +10,17 @@ import {
     RegistrationFormViewProps,
 } from '@components/RegistrationForm/types/RegistrationForm.ts';
 import { Button } from '@components/ui/Button.tsx';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form.tsx';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/Select.tsx';
+import { Form } from '@components/ui/Form.tsx';
 import { JSX } from 'react';
 
-const RegistrationFormView = ({ form, handleSubmit, isLoading }: RegistrationFormViewProps): JSX.Element => {
+import FormSelect from '../../FormSelect/FormSelect.tsx';
+
+const RegistrationFormView = ({
+    form,
+    handleSubmit,
+    isLoading,
+    useAsBillingAddress,
+}: RegistrationFormViewProps): JSX.Element => {
     return (
         <>
             <Form {...form}>
@@ -41,43 +49,56 @@ const RegistrationFormView = ({ form, handleSubmit, isLoading }: RegistrationFor
                             />
                         ))}
 
-                        <FormField
+                        <FormSelect
                             control={form.control}
-                            name="country"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Country</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a country" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {countries.map(({ label, value }) => (
-                                                <SelectItem key={value} value={value}>
-                                                    {label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
+                            name={FiledName.Country}
+                            label={Label.Country}
+                            placeholder={Placeholder.Country}
+                            data={countries}
                         />
 
                         <Checkbox
                             control={form.control}
-                            name="defaultShippingAddress"
-                            label="Set as default delivery address"
+                            name={FiledName.DefaultShippingAddress}
+                            label={Label.DefaultShippingAddress}
                         />
 
                         <Checkbox
                             control={form.control}
-                            name="useAsBillingAddress"
-                            label="Use delivery address as billing address"
+                            name={FiledName.UseAsBillingAddress}
+                            label={Label.UseAsBillingAddress}
                         />
                     </div>
+
+                    {!useAsBillingAddress && (
+                        <>
+                            <span>Billing Address:</span>
+                            {billingAddress.map(({ name, label, placeholder, type }) => (
+                                <FormInput<RegisterFormData>
+                                    key={name}
+                                    control={form.control}
+                                    name={name}
+                                    label={label}
+                                    placeholder={placeholder}
+                                    type={type}
+                                />
+                            ))}
+
+                            <FormSelect
+                                control={form.control}
+                                name={FiledName.BillingCountry}
+                                label={Label.Country}
+                                placeholder={Placeholder.Country}
+                                data={countries}
+                            />
+
+                            <Checkbox
+                                control={form.control}
+                                name={FiledName.DefaultBillingAddress}
+                                label={Label.DefaultBillingAddress}
+                            />
+                        </>
+                    )}
 
                     <Button type="submit" disabled={isLoading}>
                         Create Account

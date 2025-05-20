@@ -20,37 +20,57 @@ const errorMessages = {
     },
 };
 
-export const registrationValidationSchema = z.object({
-    email: emailSchema,
-    password: passwordSchema,
-    firstName: z
-        .string()
-        .trim()
-        .min(1, { message: errorMessages.required.firstName })
-        .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.firstName }),
-    lastName: z
-        .string()
-        .trim()
-        .min(1, { message: errorMessages.required.lastName })
-        .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.lastName }),
-    dateOfBirth: z.string().refine(
-        (val) => {
-            const dateOfBirth = new Date(val);
-            const today = new Date();
-            const age = today.getFullYear() - dateOfBirth.getFullYear();
+export const registrationValidationSchema = z
+    .object({
+        email: emailSchema,
+        password: passwordSchema,
+        firstName: z
+            .string()
+            .trim()
+            .min(1, { message: errorMessages.required.firstName })
+            .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.firstName }),
+        lastName: z
+            .string()
+            .trim()
+            .min(1, { message: errorMessages.required.lastName })
+            .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.lastName }),
+        dateOfBirth: z.string().refine(
+            (val) => {
+                const dateOfBirth = new Date(val);
+                const today = new Date();
+                const age = today.getFullYear() - dateOfBirth.getFullYear();
 
-            return age >= 13;
+                return age >= 13;
+            },
+            { message: errorMessages.custom.dateOfBirth },
+        ),
+        streetName: z.string().trim().min(1, { message: errorMessages.required.streetName }),
+        city: z
+            .string()
+            .trim()
+            .min(1, { message: errorMessages.required.city })
+            .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.city }),
+        postalCode: z.string().trim().min(1, { message: errorMessages.required.postalCode }),
+        country: z.string().trim().min(1, { message: errorMessages.required.country }),
+        defaultShippingAddress: z.boolean().optional(),
+        useAsBillingAddress: z.boolean().optional(),
+        billing_streetName: z.string().optional(),
+        billing_city: z.string().optional(),
+        billing_postalCode: z.string().optional(),
+        billing_country: z.string().optional(),
+        defaultBillingAddress: z.boolean().optional(),
+    })
+    .refine(
+        (data) => {
+            if (!data.useAsBillingAddress) {
+                return (
+                    !!data.billing_streetName?.trim() &&
+                    /^[A-Za-z]+$/.test(data.billing_city?.trim() ?? '') &&
+                    !!data.billing_postalCode?.trim() &&
+                    !!data.billing_country?.trim()
+                );
+            }
+            return true;
         },
-        { message: errorMessages.custom.dateOfBirth },
-    ),
-    streetName: z.string().trim().min(1, { message: errorMessages.required.streetName }),
-    city: z
-        .string()
-        .trim()
-        .min(1, { message: errorMessages.required.city })
-        .regex(/^[A-Za-z]+$/, { message: errorMessages.custom.city }),
-    postalCode: z.string().trim().min(1, { message: errorMessages.required.postalCode }),
-    country: z.string().trim().min(1, { message: errorMessages.required.country }),
-    defaultShippingAddress: z.boolean().optional(),
-    useAsBillingAddress: z.boolean().optional(),
-});
+        { message: 'Billing address is required', path: ['billing_streetName'] },
+    );
