@@ -47,3 +47,10 @@ export interface CustomerInfo {
     customer: Customer;
     tokenStore: TokenStore;
 }
+
+export interface DefaultAddress {
+    customerId: string;
+    version: number;
+    addressId: string;
+    errorCallback?: (errorMessage: string) => void;
+}

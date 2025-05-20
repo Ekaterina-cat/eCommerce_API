@@ -22,6 +22,7 @@ const RegistrationFormContainer = (): JSX.Element => {
             city: '',
             postalCode: '',
             country: '',
+            defaultShippingAddress: true,
         },
     });
     const navigate = useNavigate();
@@ -32,7 +33,18 @@ const RegistrationFormContainer = (): JSX.Element => {
     const onSubmit = async (values: z.infer<typeof registrationValidationSchema>): Promise<void> => {
         setIsLoading(true);
 
-        const { email, password, firstName, lastName, dateOfBirth, streetName, city, postalCode, country } = values;
+        const {
+            email,
+            password,
+            firstName,
+            lastName,
+            dateOfBirth,
+            streetName,
+            city,
+            postalCode,
+            country,
+            defaultShippingAddress,
+        } = values;
 
         const customerResult = await clientService.createCustomer({
             customerData: {
@@ -57,6 +69,16 @@ const RegistrationFormContainer = (): JSX.Element => {
         });
 
         if (customerResult) {
+            const address = customerResult.customer.addresses?.[0];
+
+            if (defaultShippingAddress && address?.id) {
+                await clientService.setDefaultAddress({
+                    customerId: customerResult.customer.id,
+                    version: customerResult.customer.version,
+                    addressId: address.id,
+                });
+            }
+
             updateIsLoggedIn(true);
             form.reset();
             await navigate(ROUTE_PATH.MAIN);
