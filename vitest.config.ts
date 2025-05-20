@@ -16,6 +16,7 @@ export default defineConfig({
                 '**/*/constants',
                 '**/*.types.ts',
                 'src/**/types/*',
+                'src/**/validation/*',
             ],
             reporter: ['text', 'json-summary', 'json', 'html'],
             reportOnFailure: true,

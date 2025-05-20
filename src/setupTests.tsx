@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom';
-
 import type { Client } from '@commercetools/ts-client';
 import type { JSX } from 'react';
 import type { LinkProps } from 'react-router';
@@ -53,5 +51,4 @@ vi.mock('@commercetools/ts-client', async () => {
 globalThis.ResizeObserver = vi.fn().mockImplementation(() => ({
     observe: vi.fn(),
     unobserve: vi.fn(),
-    disconnect: vi.fn(),
 }));
