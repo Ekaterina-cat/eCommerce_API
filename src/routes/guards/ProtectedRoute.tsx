@@ -6,7 +6,7 @@ import { Navigate, Outlet } from 'react-router';
 const ProtectedRoute = (): JSX.Element => {
     const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
-    return isLoggedIn ? <Navigate to={ROUTE_PATH.MAIN} /> : <Outlet />;
+    return isLoggedIn ? <Outlet /> : <Navigate to={ROUTE_PATH.MAIN} />;
 };
 
 export default ProtectedRoute;
