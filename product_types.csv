@@ -1,0 +1,6 @@
+key,name,description,attributes.isRequired,attributes.name,attributes.label.en-US,attributes.type.name,attributes.type.values.key,attributes.type.values.label,attributes.type.values.label.en-US,attributes.type.referenceTypeId
+MEAT_4,meat,meat fresh,,,,,,,,
+FRUITS_1,fruits,fruits,,,,,,,,
+VEGETABLES_2,vegetables,vegetables,,,,,,,,
+FISH_5,fish,fresh frozen fish,,,,,,,,
+BAKERY_3,bakery,bakery,,,,,,,,

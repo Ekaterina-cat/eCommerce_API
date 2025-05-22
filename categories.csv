@@ -1,0 +1,6 @@
+key,name.en-US,slug.en-US,description.en-US,externalId,parent.key,parent.typeId,orderHint,metaTitle.en-US,metaDescription.en-US,metaKeywords.en-US
+,meat,meat,meat fresh,,,,0.04,meat,meat fresh,
+,bakery,bakery,fresh pastries,,,,0.03,bakery,fresh pastries,
+,fish,fish,fresh frozen fish,,,,0.05,fish,fresh frozen fish,
+,fruits,fruits,fruits,,,,0.01,fruits,fruits,
+,vegetables,vegetables,vegetables,,,,0.02,vegetables,vegetables,
