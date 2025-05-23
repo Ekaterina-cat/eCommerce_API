@@ -2,6 +2,7 @@ import Header from '@components/Header/Header.tsx';
 import { LoginContainer } from '@pages/Login/LoginContainer';
 import { Main } from '@pages/Main/Main.tsx';
 import { NotFound } from '@pages/NotFound/NotFound.tsx';
+import { ProductDetailedContainer } from '@pages/ProductDetailed/ProductDetailedContainer';
 import Products from '@pages/Products/Products.tsx';
 import Profile from '@pages/Profile/Profile.tsx';
 import { RegisterContainer } from '@pages/Register/RegisterContainer.tsx';
@@ -19,6 +20,7 @@ function App(): JSX.Element {
                     <Routes>
                         <Route path={ROUTE_PATH.MAIN} element={<Main />} />
                         <Route path={ROUTE_PATH.NOT_FOUND} element={<NotFound />} />
+                        <Route path={`${ROUTE_PATH.PRODUCTS}/:id`} element={<ProductDetailedContainer />} />
                         <Route path={ROUTE_PATH.PRODUCTS} element={<Products />} />
                         <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
                         <Route path={ROUTE_PATH.REGISTER} element={<RegisterContainer />} />
