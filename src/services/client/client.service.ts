@@ -1,4 +1,4 @@
-import { ApiRoot, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { ApiRoot, createApiBuilderFromCtpClient, ProductProjection } from '@commercetools/platform-sdk';
 import type { Client } from '@commercetools/ts-client';
 import { ClientBuilder } from '@commercetools/ts-client';
 import {
@@ -96,6 +96,21 @@ class ClientService {
             if (errorCallback) {
                 errorCallback(this.handleError(error));
             }
+        }
+    }
+
+    public async getListOfProducts(): Promise<ProductProjection[]> {
+        try {
+            const client = this.getClient();
+            const response = await this.createApiRoot(client)
+                .withProjectKey({ projectKey: envService.getProjectKey() })
+                .productProjections()
+                .get()
+                .execute();
+            return response.body.results;
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error;
         }
     }
 
