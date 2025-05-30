@@ -22,3 +22,5 @@ export interface ProductDetailedProps {
     id?: string;
     onProducts?: () => void;
 }
+
+export const euroSign: string = '\u20AC';
