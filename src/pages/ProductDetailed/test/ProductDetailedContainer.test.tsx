@@ -12,7 +12,7 @@ vi.mock('react-router', () => ({
 
 vi.mock('@services/client/client.service', () => ({
     clientService: {
-        getListOfProducts: vi.fn(),
+        getById: vi.fn(),
     },
 }));
 
@@ -22,12 +22,12 @@ vi.mock('./ProductDetailedView', () => ({
 
 describe('ProductDetailedContainer', () => {
     const mockNavigate = vi.fn();
-    const mockGetListOfProducts = vi.fn();
+    const mockById = vi.fn();
 
     beforeEach(() => {
         vi.clearAllMocks();
         vi.mocked(useNavigate).mockReturnValue(mockNavigate);
-        clientService.getListOfProducts = mockGetListOfProducts;
+        clientService.getById = mockById;
     });
 
     it('should render loading state initially', () => {
@@ -48,12 +48,12 @@ describe('ProductDetailedContainer', () => {
         };
 
         vi.mocked(useParams).mockReturnValue({ id: ':123' });
-        mockGetListOfProducts.mockResolvedValue([mockProduct]);
+        mockById.mockResolvedValue(mockProduct);
 
         render(<ProductDetailedContainer />);
 
         await waitFor(() => {
-            expect(mockGetListOfProducts).toHaveBeenCalled();
+            expect(mockById).toHaveBeenCalled();
         });
     });
 });

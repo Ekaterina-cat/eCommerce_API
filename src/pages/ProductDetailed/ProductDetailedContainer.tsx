@@ -14,22 +14,15 @@ export const ProductDetailedContainer = (): JSX.Element => {
     useEffect(() => {
         const fetchProduct = async (): Promise<void> => {
             try {
-                const productsList = await clientService.getListOfProducts();
-                console.log(productsList);
-                const foundProduct = id?.slice(1) ? productsList.find((prod) => prod.id === id.slice(1)) : undefined;
-                if (foundProduct) {
-                    setProduct(foundProduct);
-                }
+                const product = await clientService.getById(id!);
+                console.log(product);
+
+                setProduct(product);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         };
-
-        if (id) {
-            fetchProduct().catch((error) => {
-                console.error('Error fetching product:', error);
-            });
-        }
+        void fetchProduct();
     }, [id]);
 
     const handleNavigateToProducts = (): void => {

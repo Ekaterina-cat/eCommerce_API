@@ -99,15 +99,16 @@ class ClientService {
         }
     }
 
-    public async getListOfProducts(): Promise<ProductProjection[]> {
+    public async getById(id: string): Promise<ProductProjection> {
         try {
             const client = this.getClient();
             const response = await this.createApiRoot(client)
                 .withProjectKey({ projectKey: envService.getProjectKey() })
                 .productProjections()
+                .withId({ ID: id })
                 .get()
                 .execute();
-            return response.body.results;
+            return response.body;
         } catch (error) {
             console.error('Error fetching products:', error);
             throw error;
