@@ -46,6 +46,7 @@ export const ProductDetailedContainer = (): JSX.Element => {
             description={product.description}
             price={product.masterVariant.prices?.[0]?.value?.centAmount || 0}
             id={product.id}
+            sku={product.masterVariant.sku}
             images={product.masterVariant.images?.[0]?.url || ''}
             onProducts={handleNavigateToProducts}
         />

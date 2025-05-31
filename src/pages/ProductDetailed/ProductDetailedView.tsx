@@ -9,6 +9,7 @@ const ProductDetailedView = ({
     description,
     price,
     id,
+    sku,
     onProducts,
 }: ProductDetailedProps): JSX.Element => {
     return (
@@ -38,7 +39,7 @@ const ProductDetailedView = ({
                 <div className="flex-1 flex flex-col gap-4">
                     <h1 className="capitalize font-bold text-3xl">{renderLocalizedString(name)}</h1>
                     <p className="text-gray-400 border-b-2 border-gray-300 pb-2">
-                        SKU: <span className="text-gray-900"></span>
+                        SKU: <span className="text-gray-900">{sku}</span>
                     </p>
                     <p className="text-gray-400 text-1xl">{renderLocalizedString(description)}</p>
                     <p className="font-bold text-2.5xl text-red-500">

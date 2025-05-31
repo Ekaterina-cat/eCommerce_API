@@ -20,6 +20,7 @@ export interface ProductDetailedProps {
     description?: LocalizedString;
     price?: number;
     id?: string;
+    sku?: string;
     onProducts?: () => void;
 }
 
