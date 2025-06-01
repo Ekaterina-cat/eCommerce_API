@@ -15,13 +15,17 @@ export const renderValue = (
 };
 
 export interface ProductDetailedProps {
-    images?: string;
     name?: LocalizedString;
     description?: LocalizedString;
     price?: number;
     id?: string;
     sku?: string;
     onProducts?: () => void;
+    images: string[];
+    currentIndex: number;
+    onNextImage: () => void;
+    onPrevImage: () => void;
+    setImageIndex: (index: number) => void;
 }
 
 export const euroSign: string = '\u20AC';

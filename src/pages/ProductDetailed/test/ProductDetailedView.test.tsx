@@ -11,17 +11,21 @@ const mockLocalizedString = (enValue: string): LocalizedString => ({
 
 describe('ProductDetailedView', () => {
     const mockProps = {
-        images: 'test-image.jpg',
-        name: mockLocalizedString('Test Product'),
+        images: ['test-image.jpg'],
+        name: mockLocalizedString('image'),
         description: mockLocalizedString('Test Description'),
         price: 100,
         id: '123',
         onProducts: vi.fn(),
+        currentIndex: 0,
+        onNextImage: vi.fn(),
+        onPrevImage: vi.fn(),
+        setImageIndex: vi.fn(),
     };
 
     it('renders the product image', () => {
         render(<ProductDetailedView {...mockProps} />);
-        const image = screen.getByAltText(mockProps.images || '');
+        const image = screen.getByAltText('image');
         expect(image).toBeDefined();
     });
 
