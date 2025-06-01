@@ -1,4 +1,6 @@
 import ImageCarouselView from '@components/ImageCarousel/ImageCarouselView';
+import useModalWinProductDetailed from '@components/ModalWinProductDetailed/ModalWinProductDetailedContainer';
+import ModalWinProductDetailedView from '@components/ModalWinProductDetailed/ModalWinProductDetailedView';
 import { Button } from '@components/ui/Button';
 import { JSX } from 'react';
 
@@ -17,6 +19,7 @@ const ProductDetailedView = ({
     onPrevImage,
     setImageIndex,
 }: ProductDetailedProps): JSX.Element => {
+    const { isModalOpen, openModal, closeModal } = useModalWinProductDetailed();
     return (
         <div className="flex flex-col items-center">
             <Button onClick={onProducts} className="self-start mb-5">
@@ -45,6 +48,7 @@ const ProductDetailedView = ({
                     onNextImage={onNextImage}
                     onPrevImage={onPrevImage}
                     setImageIndex={setImageIndex}
+                    onOpenModal={openModal}
                 />
                 <div className="flex-1 flex flex-col gap-4">
                     <h1 className="capitalize font-bold text-3xl">{renderLocalizedString(name)}</h1>
@@ -70,6 +74,15 @@ const ProductDetailedView = ({
                     </Button>
                 </div>
             </div>
+            {isModalOpen && (
+                <ModalWinProductDetailedView
+                    images={images}
+                    currentIndex={currentIndex}
+                    onClose={closeModal}
+                    onNextImage={onNextImage}
+                    onPrevImage={onPrevImage}
+                />
+            )}
         </div>
     );
 };

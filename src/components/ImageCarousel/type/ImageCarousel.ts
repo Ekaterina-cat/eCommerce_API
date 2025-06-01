@@ -12,6 +12,7 @@ export interface ImageCarouselProps {
     onNextImage: () => void;
     onPrevImage: () => void;
     setImageIndex: (index: number) => void;
+    onOpenModal: () => void;
 }
 
 export type ImportedImage = {
