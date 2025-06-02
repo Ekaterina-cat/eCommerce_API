@@ -1,6 +1,5 @@
-import { LoginContainer } from '@pages/Login/LoginContainer.tsx';
+import { LoginContainer } from '@pages/Login/LoginContainer';
 import { Main } from '@pages/Main/Main.tsx';
-import Profile from '@pages/Profile/Profile.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import ProtectedRoute from '@routes/guards/ProtectedRoute';
 import { useUserStore } from '@store/login.store.ts';
@@ -22,21 +21,21 @@ describe('ProtectedRoute', () => {
         vi.clearAllMocks();
     });
 
-    it('should show Profile when user is logged in', () => {
+    it('should redirect to main when user is logged in', () => {
         vi.mocked(useUserStore).setState({ isLoggedIn: true });
 
         render(
-            <MemoryRouter initialEntries={[ROUTE_PATH.PROFILE]}>
+            <MemoryRouter initialEntries={[ROUTE_PATH.LOGIN]}>
                 <Routes>
                     <Route path={ROUTE_PATH.MAIN} element={<Main />} />
                     <Route element={<ProtectedRoute />}>
-                        <Route path={ROUTE_PATH.PROFILE} element={<Profile />} />
+                        <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
                     </Route>
                 </Routes>
             </MemoryRouter>,
         );
 
-        expect(screen.getByText('Profile')).toBeDefined();
+        expect(screen.getByText('Main')).toBeDefined();
     });
 
     it('should show Login when user is not logged in', () => {
@@ -45,7 +44,10 @@ describe('ProtectedRoute', () => {
         render(
             <MemoryRouter initialEntries={[ROUTE_PATH.LOGIN]}>
                 <Routes>
-                    <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
+                    <Route path={ROUTE_PATH.MAIN} element={<Main />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
+                    </Route>
                 </Routes>
             </MemoryRouter>,
         );

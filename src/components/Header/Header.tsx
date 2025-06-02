@@ -1,5 +1,10 @@
 import LoginPopover from '@components/LoginPopover/LoginPopover.tsx';
-import { NavigationMenu, NavigationMenuLink, NavigationMenuList } from '@components/ui/NavigationMenu.tsx';
+import {
+    NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+} from '@components/ui/NavigationMenu.tsx';
 import { ROUTE_PATH } from '@routes/constants/routes.ts';
 import { useUserStore } from '@store/login.store.ts';
 import type { JSX } from 'react';
@@ -13,18 +18,19 @@ const Header = (): JSX.Element => {
         <header className="header">
             <NavigationMenu>
                 <NavigationMenuList>
-                    <NavigationMenuLink to={ROUTE_PATH.PRODUCTS}>Products</NavigationMenuLink>
+                    <NavigationMenuItem>
+                        <NavigationMenuLink to={ROUTE_PATH.MAIN}>Main</NavigationMenuLink>
+                    </NavigationMenuItem>
                     {isLoggedIn ? (
-                        <>
-                            <NavigationMenuLink to={ROUTE_PATH.PROFILE}>Profile</NavigationMenuLink>
-                            <button className="logout" onClick={handleLogout}>
-                                Logout
-                            </button>
-                        </>
+                        <button onClick={handleLogout}>Logout</button>
                     ) : (
                         <>
-                            <NavigationMenuLink to={ROUTE_PATH.LOGIN}>Login</NavigationMenuLink>
-                            <NavigationMenuLink to={ROUTE_PATH.REGISTER}>Register</NavigationMenuLink>
+                            <NavigationMenuItem>
+                                <NavigationMenuLink to={ROUTE_PATH.LOGIN}>Login</NavigationMenuLink>
+                            </NavigationMenuItem>
+                            <NavigationMenuItem>
+                                <NavigationMenuLink to={ROUTE_PATH.REGISTER}>Register</NavigationMenuLink>
+                            </NavigationMenuItem>
                         </>
                     )}
                 </NavigationMenuList>
