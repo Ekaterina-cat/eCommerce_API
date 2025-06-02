@@ -1,23 +1,20 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { renderLocalizedString } from '@pages/ProductDetailed/types/ProductType';
 import { useEffect, useState } from 'react';
 
-import { ImageCarouselProduct, ImportedImage } from './type/ImageCarousel';
+import { ImageCarouselProduct } from './type/ImageCarousel';
 
 export const ImageCarouselContainer = (product: ProductProjection | null): ImageCarouselProduct => {
     const [images, setImages] = useState<string[]>([]);
     const [imageIndex, setImageIndex] = useState<number>(0);
 
     useEffect(() => {
-        const loadImage = async (): Promise<void> => {
+        const loadImage = (): void => {
             try {
                 if (product) {
                     const imagesArray: string[] = [];
                     for (let i = 1; i <= 3; i++) {
-                        const imageName = `${renderLocalizedString(product.name)}_${i}.png`;
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                        const imageModule: ImportedImage = await import(/* @vite-ignore */ `/src/assets/${imageName}`);
-                        imagesArray.push(imageModule.default);
+                        const imageName = `${product.name['en-US']}_${i}.png`;
+                        imagesArray.push(`/public/${imageName}`);
                     }
                     setImages(imagesArray);
                 }

@@ -19,7 +19,7 @@ const Header = (): JSX.Element => {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuLink to={ROUTE_PATH.MAIN}>Main</NavigationMenuLink>
+                        <NavigationMenuLink to={ROUTE_PATH.PRODUCTS}>Products</NavigationMenuLink>
                     </NavigationMenuItem>
                     {isLoggedIn ? (
                         <button onClick={handleLogout}>Logout</button>

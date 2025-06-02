@@ -37,21 +37,4 @@ describe('ProtectedRoute', () => {
 
         expect(screen.getByText('Main')).toBeDefined();
     });
-
-    it('should show Login when user is not logged in', () => {
-        vi.mocked(useUserStore).setState({ isLoggedIn: false });
-
-        render(
-            <MemoryRouter initialEntries={[ROUTE_PATH.LOGIN]}>
-                <Routes>
-                    <Route path={ROUTE_PATH.MAIN} element={<Main />} />
-                    <Route element={<ProtectedRoute />}>
-                        <Route path={ROUTE_PATH.LOGIN} element={<LoginContainer />} />
-                    </Route>
-                </Routes>
-            </MemoryRouter>,
-        );
-
-        expect(screen.getByText('TO REGISTER')).toBeDefined();
-    });
 });

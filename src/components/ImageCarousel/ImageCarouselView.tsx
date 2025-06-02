@@ -13,7 +13,7 @@ const ImageCarouselView = ({
 }: ImageCarouselProps): JSX.Element => {
     return (
         <div className="relative w-full max-w-[600px] h-[400px]">
-            <div className="w-full h-full p-10">
+            <div className="w-full h-full p-15">
                 <img
                     src={images[currentIndex]}
                     alt={'image'}
