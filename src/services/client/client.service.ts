@@ -115,6 +115,21 @@ class ClientService {
         }
     }
 
+    public async getAll(): Promise<ProductProjection[]> {
+        try {
+            const client = this.getClient();
+            const response = await this.createApiRoot(client)
+                .withProjectKey({ projectKey: envService.getProjectKey() })
+                .productProjections()
+                .get()
+                .execute();
+            return response.body.results;
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error;
+        }
+    }
+
     private getClient(): Client {
         return new ClientBuilder()
             .defaultClient(
