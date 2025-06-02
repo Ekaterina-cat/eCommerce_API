@@ -13,7 +13,7 @@ const Header = (): JSX.Element => {
         <header className="header">
             <NavigationMenu>
                 <NavigationMenuList>
-                    <NavigationMenuLink to={ROUTE_PATH.PROFILE}>Products</NavigationMenuLink>
+                    <NavigationMenuLink to={ROUTE_PATH.PRODUCTS}>Products</NavigationMenuLink>
                     {isLoggedIn ? (
                         <>
                             <NavigationMenuLink to={ROUTE_PATH.PROFILE}>Profile</NavigationMenuLink>

@@ -40,7 +40,7 @@ export const ProductDetailedContainer = (): JSX.Element => {
         <ProductDetailedView
             name={product.name}
             description={product.description}
-            price={product.masterVariant.prices?.[0]?.value?.centAmount || 0}
+            price={(product.masterVariant.prices?.[0]?.value?.centAmount || 0) / 100}
             id={product.id}
             sku={product.masterVariant.sku}
             onProducts={handleNavigateToProducts}
