@@ -125,7 +125,7 @@
 }
 
 .header {
-  @apply container mx-auto sticky top-0 z-40 w-full border-b bg-background flex justify-end;
+  @apply container mx-auto sticky top-0 z-40 w-full border-b bg-background flex justify-around;
 }
 
 .form {
