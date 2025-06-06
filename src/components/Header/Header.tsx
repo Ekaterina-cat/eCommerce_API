@@ -16,6 +16,9 @@ const Header = (): JSX.Element => {
 
     return (
         <header className="header">
+            <div className="flex items-center justify-center text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+                Fresh food
+            </div>
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>

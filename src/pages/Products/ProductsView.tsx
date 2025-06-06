@@ -13,7 +13,6 @@ const ProductsView = ({ products, onCardClick }: ProductsViewExtendedProps): JSX
                     <Card
                         key={product.id}
                         className="overflow-hidden flex flex-col justify-center h-full group hover:border-green-500 transition-all duration-800"
-                        onClick={() => onCardClick(product.id)}
                         style={{ cursor: 'pointer' }}
                     >
                         <CardHeader className="flex-grow flex flex-col items-center">
@@ -24,6 +23,7 @@ const ProductsView = ({ products, onCardClick }: ProductsViewExtendedProps): JSX
                                     src={`public/${product.name['en-US']}_1.png`}
                                     alt={product.name['en-US']}
                                     className="object-contain max-h-full max-w-full transform group-hover:scale-115 transition-transform duration-800 origin-center"
+                                    onClick={() => onCardClick(product.id)}
                                 />
                             </div>
                         </CardHeader>
