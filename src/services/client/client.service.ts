@@ -1,4 +1,4 @@
-import { ApiRoot, createApiBuilderFromCtpClient, ProductProjection } from '@commercetools/platform-sdk';
+import { ApiRoot, Cart, createApiBuilderFromCtpClient, ProductProjection } from '@commercetools/platform-sdk';
 import type { Client } from '@commercetools/ts-client';
 import { ClientBuilder } from '@commercetools/ts-client';
 import {
@@ -128,6 +128,50 @@ class ClientService {
             console.error('Error fetching products:', error);
             throw error;
         }
+    }
+
+    public async createCart(currency: string): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot
+                .me()
+                .carts()
+                .post({
+                    body: {
+                        currency,
+                    },
+                })
+                .execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error creating cart:', error);
+            throw error;
+        }
+    }
+
+    private getClientForAnonymousSession(): Client {
+        return new ClientBuilder()
+            .withAnonymousSessionFlow({
+                host: envService.getOauthUrl(),
+                projectKey: envService.getProjectKey(),
+                credentials: {
+                    clientId: envService.getClientId(),
+                    clientSecret: envService.getClientSecret(),
+                },
+                scopes: envService.getScopes(),
+                tokenCache: tokenCacheService.tokenCache,
+                httpClient: fetch,
+            })
+            .withHttpMiddleware({
+                host: envService.getBaseUrl(),
+                httpClient: fetch,
+            })
+            .build();
     }
 
     private getClient(): Client {
