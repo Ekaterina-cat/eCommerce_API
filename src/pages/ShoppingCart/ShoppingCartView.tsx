@@ -2,7 +2,9 @@ import { Button } from '@components/ui/Button';
 import { IconEmptyBoxtSvg } from '@constants/Constant';
 import { JSX } from 'react';
 
-import { ShoppingCartProps } from './type/ShoppingCartType';
+interface ShoppingCartProps {
+    onProducts?: VoidFunction;
+}
 
 export const ShoppingCartView = ({ onProducts }: ShoppingCartProps): JSX.Element => {
     return (

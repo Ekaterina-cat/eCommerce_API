@@ -1,5 +1,5 @@
 import { Cart, ProductProjection } from '@commercetools/platform-sdk';
-import useFetch from '@hooks/UseFetch/useFetch';
+import useFetch from '@hooks/UseFecth/useFetch';
 import { ROUTE_PATH } from '@routes/constants/routes';
 import { clientService } from '@services/client/client.service';
 import { JSX, useEffect, useState } from 'react';
