@@ -70,7 +70,8 @@ const mockProducts: ProductProjection[] = [
 describe('ProductsView', () => {
     it('renders the component with products', () => {
         const mockOnCardClick = vi.fn();
-        render(<ProductsView products={mockProducts} onCardClick={mockOnCardClick} />);
+        const mockOnaddTocart = vi.fn();
+        render(<ProductsView products={mockProducts} onCardClick={mockOnCardClick} onAddToCard={mockOnaddTocart} />);
 
         expect(screen.getByText('Products')).toBeDefined();
 
@@ -82,7 +83,8 @@ describe('ProductsView', () => {
 
     it('calls onCardClick when a card is clicked', () => {
         const mockOnCardClick = vi.fn();
-        render(<ProductsView products={mockProducts} onCardClick={mockOnCardClick} />);
+        const mockOnaddTocart = vi.fn();
+        render(<ProductsView products={mockProducts} onCardClick={mockOnCardClick} onAddToCard={mockOnaddTocart} />);
 
         const productNameElement = screen.getByText(mockProducts[0].name['en-US']);
         const cardElement = productNameElement.closest('.overflow-hidden');
