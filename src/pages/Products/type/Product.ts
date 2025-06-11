@@ -13,4 +13,5 @@ export interface ProductsViewProps {
 
 export interface ProductsViewExtendedProps extends ProductsViewProps {
     onCardClick: (id: string) => void;
+    onAddToCard: (productId: string) => void;
 }

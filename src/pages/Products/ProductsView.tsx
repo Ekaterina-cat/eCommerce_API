@@ -5,7 +5,7 @@ import { JSX } from 'react';
 
 import { ProductsViewExtendedProps } from './type/Product';
 
-const ProductsView = ({ products, onCardClick }: ProductsViewExtendedProps): JSX.Element => {
+const ProductsView = ({ products, onCardClick, onAddToCard }: ProductsViewExtendedProps): JSX.Element => {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-6">Products</h1>
@@ -37,7 +37,10 @@ const ProductsView = ({ products, onCardClick }: ProductsViewExtendedProps): JSX
                             </p>
                         </CardContent>
                         <div className="flex justify-center w-full">
-                            <Button className="md:w-1/3 bg-white text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                            <Button
+                                className="md:w-1/3 bg-white text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+                                onClick={() => onAddToCard(product.id)}
+                            >
                                 <IconCartSvg />
                             </Button>
                         </div>
