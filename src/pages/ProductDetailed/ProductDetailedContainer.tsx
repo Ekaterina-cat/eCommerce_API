@@ -1,6 +1,6 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { ImageCarouselContainer } from '@components/ImageCarousel/ImageCarouselContainer';
-import useFetch from '@hooks/UseFetch/useFetch';
+import useFetch from '@hooks/UseFecth/useFetch';
 import { ROUTE_PATH } from '@routes/constants/routes';
 import { clientService } from '@services/client/client.service';
 import { JSX } from 'react';
@@ -12,12 +12,7 @@ export const ProductDetailedContainer = (): JSX.Element => {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
 
-    const fetchProduct = async (): Promise<ProductProjection> => {
-        const product = await clientService.getById(id!);
-        return product;
-    };
-
-    const { data: product, error, loading } = useFetch<ProductProjection>(fetchProduct);
+    const { data: product, error, loading } = useFetch<ProductProjection>(() => clientService.getById(id!));
 
     const { images, imageIndex, handleNextImage, handlePrevImage, handleSetImageIndex } =
         ImageCarouselContainer(product);

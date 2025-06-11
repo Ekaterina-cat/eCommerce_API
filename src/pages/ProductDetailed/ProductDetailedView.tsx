@@ -1,3 +1,4 @@
+import { LocalizedString } from '@commercetools/platform-sdk';
 import ImageCarouselView from '@components/ImageCarousel/ImageCarouselView';
 import useModalWinProductDetailed from '@components/ModalWinProductDetailed/ModalWinProductDetailedContainer';
 import ModalWinProductDetailedView from '@components/ModalWinProductDetailed/ModalWinProductDetailedView';
@@ -5,7 +6,35 @@ import { Button } from '@components/ui/Button';
 import { IconCartSvg } from '@constants/Constant';
 import { JSX } from 'react';
 
-import { euroSign, ProductDetailedProps, renderLocalizedString, renderValue } from './types/ProductType';
+export const renderLocalizedString = (
+    value?: LocalizedString,
+    defaultValue: string = 'No information available',
+): string => {
+    return value ? value['en-US'] : defaultValue;
+};
+
+export const renderValue = (
+    value?: string | number,
+    defaultValue: string = 'No information available',
+): string | number => {
+    return value === undefined ? defaultValue : value;
+};
+
+interface ProductDetailedProps {
+    name?: LocalizedString;
+    description?: LocalizedString;
+    price?: number;
+    id?: string;
+    sku?: string;
+    onProducts?: VoidFunction;
+    images: string[];
+    currentIndex: number;
+    onNextImage: VoidFunction;
+    onPrevImage: VoidFunction;
+    setImageIndex: (index: number) => void;
+}
+
+const euroSign: string = '\u20AC';
 
 const ProductDetailedView = ({
     name,

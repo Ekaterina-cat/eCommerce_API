@@ -2,8 +2,7 @@ import { LocalizedString } from '@commercetools/platform-sdk';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import ProductDetailedView from '../ProductDetailedView';
-import { renderLocalizedString, renderValue } from '../types/ProductType';
+import ProductDetailedView, { renderLocalizedString, renderValue } from '../ProductDetailedView';
 
 const mockLocalizedString = (enValue: string): LocalizedString => ({
     'en-US': enValue,

@@ -1,11 +1,16 @@
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { Button } from '@components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Cards';
 import { IconCartSvg } from '@constants/Constant';
 import { JSX } from 'react';
 
-import { ProductsViewExtendedProps } from './type/Product';
+interface ProductsViewProps {
+    products: ProductProjection[];
+    onCardClick: (id: string) => void;
+    onAddToCard: (productId: string) => void;
+}
 
-const ProductsView = ({ products, onCardClick, onAddToCard }: ProductsViewExtendedProps): JSX.Element => {
+const ProductsView = ({ products, onCardClick, onAddToCard }: ProductsViewProps): JSX.Element => {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-6">Products</h1>
