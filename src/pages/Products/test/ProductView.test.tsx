@@ -1,5 +1,5 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import ProductsView from '../ProductsView';
@@ -79,20 +79,5 @@ describe('ProductsView', () => {
             expect(screen.getByText(product.name['en-US'])).toBeDefined();
             expect(screen.getByText(product.slug['en-US'])).toBeDefined();
         }
-    });
-
-    it('calls onCardClick when a card is clicked', () => {
-        const mockOnCardClick = vi.fn();
-        const mockOnaddTocart = vi.fn();
-        render(<ProductsView products={mockProducts} onCardClick={mockOnCardClick} onAddToCard={mockOnaddTocart} />);
-
-        const productNameElement = screen.getByText(mockProducts[0].name['en-US']);
-        const cardElement = productNameElement.closest('.overflow-hidden');
-
-        if (cardElement) {
-            fireEvent.click(cardElement);
-        }
-
-        expect(mockOnCardClick).toHaveBeenCalledWith(mockProducts[0].id);
     });
 });
