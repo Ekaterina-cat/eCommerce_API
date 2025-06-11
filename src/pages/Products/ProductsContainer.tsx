@@ -16,12 +16,8 @@ const ProductContainer = (): JSX.Element => {
     useEffect(() => {
         const initializeData = async (): Promise<void> => {
             try {
-                // Создаем корзину для анонимного пользователя
                 const newCart = await clientService.createCart('EUR');
                 setCartId(newCart);
-                console.log('Created Cart ID:', cart);
-
-                // Получаем список продуктов
                 const productsResponse = await clientService.getAll();
                 setProducts(productsResponse);
             } catch (error) {
@@ -33,7 +29,27 @@ const ProductContainer = (): JSX.Element => {
         };
 
         void initializeData();
-    });
+    }, []);
+
+    const handleAddToCart = async (productId: string): Promise<void> => {
+        if (!cart) {
+            console.error('Cart is not available');
+            return;
+        }
+
+        try {
+            const updatedCart = await clientService.updateCart({
+                cartId: cart.id,
+                productId,
+                version: cart.version,
+            });
+            setCartId(updatedCart);
+            alert('Product added to cart!');
+        } catch (error) {
+            console.error('Error adding product to cart:', error);
+            alert('Failed to add product to cart.');
+        }
+    };
 
     const handleCardClick = (id: string): void => {
         void navigate(`${ROUTE_PATH.PRODUCTS}/${id}`);
@@ -47,7 +63,15 @@ const ProductContainer = (): JSX.Element => {
         return <div>{error}</div>;
     }
 
-    return <ProductsView products={products} onCardClick={handleCardClick} />;
+    return (
+        <ProductsView
+            products={products}
+            onCardClick={handleCardClick}
+            onAddToCard={(productId: string) => {
+                void handleAddToCart(productId);
+            }}
+        />
+    );
 };
 
 export default ProductContainer;
