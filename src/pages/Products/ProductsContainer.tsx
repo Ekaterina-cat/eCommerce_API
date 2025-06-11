@@ -1,4 +1,5 @@
 import { Cart, ProductProjection } from '@commercetools/platform-sdk';
+import useFetch from '@hooks/UseFetch/useFetch';
 import { ROUTE_PATH } from '@routes/constants/routes';
 import { clientService } from '@services/client/client.service';
 import { JSX, useEffect, useState } from 'react';
@@ -7,28 +8,21 @@ import { useNavigate } from 'react-router';
 import ProductsView from './ProductsView';
 
 const ProductContainer = (): JSX.Element => {
-    const [products, setProducts] = useState<ProductProjection[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const [cart, setCartId] = useState<Cart | null>(null);
     const navigate = useNavigate();
+    const [cart, setCartId] = useState<Cart | null>(null);
+
+    const { data: products, error, loading } = useFetch<ProductProjection[]>(() => clientService.getAll());
 
     useEffect(() => {
-        const initializeData = async (): Promise<void> => {
+        const initializeCart = async (): Promise<void> => {
             try {
                 const newCart = await clientService.createCart('EUR');
                 setCartId(newCart);
-                const productsResponse = await clientService.getAll();
-                setProducts(productsResponse);
             } catch (error) {
-                setError('Failed to initialize data');
-                console.error('Initialization error:', error);
-            } finally {
-                setLoading(false);
+                console.error('Error initializing cart:', error);
             }
         };
-
-        void initializeData();
+        void initializeCart();
     }, []);
 
     const handleAddToCart = async (productId: string): Promise<void> => {
@@ -36,7 +30,6 @@ const ProductContainer = (): JSX.Element => {
             console.error('Cart is not available');
             return;
         }
-
         try {
             const updatedCart = await clientService.updateCart({
                 cartId: cart.id,
@@ -55,17 +48,12 @@ const ProductContainer = (): JSX.Element => {
         void navigate(`${ROUTE_PATH.PRODUCTS}/${id}`);
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>{error}</div>;
-    }
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <ProductsView
-            products={products}
+            products={products ?? []}
             onCardClick={handleCardClick}
             onAddToCard={(productId: string) => {
                 void handleAddToCart(productId);
