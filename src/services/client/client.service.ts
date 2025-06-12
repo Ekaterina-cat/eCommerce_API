@@ -195,6 +195,22 @@ class ClientService {
         }
     }
 
+    public async getCart(): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot.me().activeCart().get().execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error fetching cart:', error);
+            throw error;
+        }
+    }
+
     private getClientForAnonymousSession(): Client {
         return new ClientBuilder()
             .withAnonymousSessionFlow({
