@@ -1,3 +1,4 @@
+import { Counter } from '@components/Counter/Counter';
 import { Button } from '@components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Cards';
 import { IconEmptyBoxtSvg } from '@constants/Constant';
@@ -19,6 +20,16 @@ interface ShoppingCartProps {
 }
 
 export const ShoppingCartView = ({ onProducts, cartItems }: ShoppingCartProps): JSX.Element => {
+    const calculateTotal = (): number => {
+        let total = 0;
+        for (const cartItem of cartItems) {
+            const price = cartItem.price?.value?.centAmount ? cartItem.price.value.centAmount / 100 : 0;
+            const quantity = cartItem.quantity || 1;
+            total += price * quantity;
+        }
+        return total;
+    };
+
     if (!cartItems || cartItems.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen space-y-10">
@@ -54,11 +65,15 @@ export const ShoppingCartView = ({ onProducts, cartItems }: ShoppingCartProps): 
                         </CardContent>
                     </Card>
                     <div className="flex flex-col justify-center items-center w-1/2 space-y-2">
-                        <Button>Button 1</Button>
-                        <Button>Button 2</Button>
+                        <Counter />
+                        <Button>Delete</Button>
                     </div>
                 </div>
             ))}
+            <hr className="my-4 border-t-2 border-gray-300" />
+            <div className="flex justify-end text-xl font-bold">
+                Итого: {cartItems[0]?.price?.value?.currencyCode ?? 'N/A'} {calculateTotal().toFixed(2)}
+            </div>
         </div>
     );
 };
