@@ -34,17 +34,7 @@ export const ShoppingCartContainer = (): JSX.Element => {
         return <div>Loading...</div>;
     }
 
-    const cartItems: Array<{
-        id: string;
-        name: string;
-        quantity: number;
-        price: {
-            value: {
-                centAmount: number;
-                currencyCode: string;
-            };
-        };
-    }> =
+    const cartItems =
         cart?.lineItems?.map((item: LineItem) => ({
             id: item.id,
             name: item.name['en-US'] || 'Unknown Product',

@@ -3,23 +3,23 @@ import { Button } from '@components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Cards';
 import { IconEmptyBoxtSvg } from '@constants/Constant';
 import { JSX } from 'react';
-interface CartItem {
-    id: string;
-    name: string;
-    quantity: number;
-    price: {
-        value: {
-            centAmount: number;
-            currencyCode: string;
+
+interface ShoppingCartViewProps {
+    onProducts: () => void;
+    cartItems: Array<{
+        id: string;
+        name: string;
+        quantity: number;
+        price: {
+            value: {
+                centAmount: number;
+                currencyCode: string;
+            };
         };
-    };
-}
-interface ShoppingCartProps {
-    onProducts?: VoidFunction;
-    cartItems: CartItem[];
+    }>;
 }
 
-export const ShoppingCartView = ({ onProducts, cartItems }: ShoppingCartProps): JSX.Element => {
+export const ShoppingCartView = ({ onProducts, cartItems }: ShoppingCartViewProps): JSX.Element => {
     const calculateTotal = (): number => {
         let total = 0;
         for (const cartItem of cartItems) {
