@@ -16,10 +16,17 @@ const ProductContainer = (): JSX.Element => {
     useEffect(() => {
         const initializeCart = async (): Promise<void> => {
             try {
-                const newCart = await clientService.createCart('EUR');
-                setCartId(newCart);
+                const localCartId = localStorage.getItem('cartIdAnon');
+
+                if (localCartId) {
+                    const cartData = await clientService.getCart();
+                    setCartId(cartData);
+                }
             } catch (error) {
                 console.error('Error initializing cart:', error);
+                const newCart = await clientService.createCart('EUR');
+                localStorage.setItem('cartIdAnon', newCart.id);
+                setCartId(newCart);
             }
         };
         void initializeCart();
