@@ -5,6 +5,7 @@ import { IconEmptyBoxtSvg } from '@constants/Constant';
 import { JSX } from 'react';
 
 interface ShoppingCartViewProps {
+    onProducts: () => void;
     cartItems: Array<{
         id: string;
         name: string;
@@ -21,7 +22,12 @@ interface ShoppingCartViewProps {
     onDecrement: (productId: string, quantity: number) => void;
 }
 
-export const ShoppingCartView = ({ cartItems, onIncrement, onDecrement }: ShoppingCartViewProps): JSX.Element => {
+export const ShoppingCartView = ({
+    onProducts,
+    cartItems,
+    onIncrement,
+    onDecrement,
+}: ShoppingCartViewProps): JSX.Element => {
     const calculateTotal = (): number => {
         let total = 0;
         for (const cartItem of cartItems) {
@@ -39,6 +45,7 @@ export const ShoppingCartView = ({ cartItems, onIncrement, onDecrement }: Shoppi
                 <div className="flex justify-center items-center">
                     <p className="text-red-500 uppercase border-4 border-grey-500 p-6">Your Cart Is Currently Empty.</p>
                 </div>
+                <Button onClick={onProducts}>Return to shop</Button>
             </div>
         );
     }
