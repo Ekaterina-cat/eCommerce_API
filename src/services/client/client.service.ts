@@ -154,6 +154,48 @@ class ClientService {
         }
     }
 
+    public async updateQuantityCart({
+        cartId,
+        lineItemId,
+        version,
+        quantity,
+    }: {
+        cartId: string;
+        lineItemId: string;
+        version: number;
+        quantity: number;
+    }): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot
+                .me()
+                .carts()
+                .withId({ ID: cartId })
+                .post({
+                    body: {
+                        version,
+                        actions: [
+                            {
+                                action: 'changeLineItemQuantity',
+                                lineItemId,
+                                quantity,
+                            },
+                        ],
+                    },
+                })
+                .execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error adding product to cart:', error);
+            throw error;
+        }
+    }
+
     public async updateCart({
         cartId,
         productId,
