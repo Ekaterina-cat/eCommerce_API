@@ -30,6 +30,37 @@ export const ShoppingCartContainer = (): JSX.Element => {
         void navigate(ROUTE_PATH.PRODUCTS);
     };
 
+    const updateLineItemQuantity = async (productId: string, newQuantity: number): Promise<void> => {
+        if (!cart) return;
+
+        try {
+            const lineItem = cart.lineItems.find((item) => item.productId === productId);
+            if (!lineItem) {
+                console.error(`No line item found with productId: ${productId}`);
+                return;
+            }
+
+            const updatedCart = await clientService.updateQuantityCart({
+                cartId: cart.id,
+                lineItemId: lineItem.id,
+                version: cart.version,
+                quantity: newQuantity,
+            });
+            setCart(updatedCart);
+        } catch (error) {
+            console.error('Error updating item quantity:', error);
+        }
+    };
+
+    const handleIncrement = (productId: string, quantity: number): void => {
+        void updateLineItemQuantity(productId, quantity + 1);
+    };
+
+    const handleDecrement = (productId: string, quantity: number): void => {
+        if (quantity <= 1) return;
+        void updateLineItemQuantity(productId, quantity - 1);
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -38,6 +69,7 @@ export const ShoppingCartContainer = (): JSX.Element => {
         cart?.lineItems?.map((item: LineItem) => ({
             id: item.id,
             name: item.name['en-US'] || 'Unknown Product',
+            productId: item.productId || 'Unknown ProductID',
             quantity: item.quantity,
             price: {
                 value: {
@@ -47,5 +79,12 @@ export const ShoppingCartContainer = (): JSX.Element => {
             },
         })) || [];
 
-    return <ShoppingCartView onProducts={handleReturnToShop} cartItems={cartItems} />;
+    return (
+        <ShoppingCartView
+            onProducts={handleReturnToShop}
+            cartItems={cartItems}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+        />
+    );
 };
