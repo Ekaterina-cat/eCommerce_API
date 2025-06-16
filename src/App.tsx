@@ -1,4 +1,5 @@
 import Header from '@components/Header/Header.tsx';
+import { AboutUsView } from '@pages/AboutUs/AboutUsView';
 import { LoginContainer } from '@pages/Login/LoginContainer';
 import { Main } from '@pages/Main/Main.tsx';
 import { NotFound } from '@pages/NotFound/NotFound.tsx';
@@ -29,6 +30,7 @@ function App(): JSX.Element {
                         <Route element={<ProtectedRoute />}>
                             <Route path={ROUTE_PATH.PROFILE} element={<Profile />} />
                         </Route>
+                        <Route path={ROUTE_PATH.ABOUTUS} element={<AboutUsView />} />
                     </Routes>
                 </main>
             </BrowserRouter>

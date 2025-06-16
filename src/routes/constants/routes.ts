@@ -5,5 +5,6 @@ export const ROUTE_PATH = {
     PROFILE: '/profile',
     PRODUCTS: '/products',
     SHOPPINGCARD: '/shoppingcart',
+    ABOUTUS: '/aboutus',
     NOT_FOUND: '*',
 } as const;
