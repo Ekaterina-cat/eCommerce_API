@@ -10,8 +10,13 @@ import ProductsView from './ProductsView';
 const ProductContainer = (): JSX.Element => {
     const navigate = useNavigate();
     const [cart, setCartId] = useState<Cart | null>(null);
+    const [isCartLoading, setIsCartLoading] = useState(true);
 
-    const { data: products, error, loading } = useFetch<ProductProjection[]>(() => clientService.getAll());
+    const {
+        data: products,
+        error: productsError,
+        loading: productsLoading,
+    } = useFetch<ProductProjection[]>(() => clientService.getAll());
 
     useEffect(() => {
         const initializeCart = async (): Promise<void> => {
@@ -27,6 +32,8 @@ const ProductContainer = (): JSX.Element => {
                 const newCart = await clientService.createCart('EUR');
                 localStorage.setItem('cartIdAnon', newCart.id);
                 setCartId(newCart);
+            } finally {
+                setIsCartLoading(false);
             }
         };
         void initializeCart();
@@ -55,8 +62,8 @@ const ProductContainer = (): JSX.Element => {
         void navigate(`${ROUTE_PATH.PRODUCTS}/${id}`);
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    if (productsLoading || isCartLoading) return <div>Loading...</div>;
+    if (productsError) return <div>{productsError}</div>;
 
     return (
         <ProductsView
