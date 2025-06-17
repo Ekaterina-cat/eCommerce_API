@@ -59,7 +59,7 @@ export const ShoppingCartView = ({
                             <CardTitle className="text-center">{cartItem.name}</CardTitle>
                             <div className="flex justify-center items-center h-48 w-full">
                                 <img
-                                    src={`/public/${cartItem.name}_1.png`}
+                                    src={`${cartItem.name}_1.png`}
                                     alt={cartItem.name}
                                     className="object-contain max-h-full max-w-full transform group-hover:scale-115 transition-transform duration-800 origin-center"
                                 />
