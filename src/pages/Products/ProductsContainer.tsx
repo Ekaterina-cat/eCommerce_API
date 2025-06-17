@@ -29,9 +29,6 @@ const ProductContainer = (): JSX.Element => {
                 }
             } catch (error) {
                 console.error('Error initializing cart:', error);
-                const newCart = await clientService.createCart('EUR');
-                localStorage.setItem('cartIdAnon', newCart.id);
-                setCartId(newCart);
             } finally {
                 setIsCartLoading(false);
             }
@@ -41,7 +38,9 @@ const ProductContainer = (): JSX.Element => {
 
     const handleAddToCart = async (productId: string): Promise<void> => {
         if (!cart) {
-            console.error('Cart is not available');
+            const newCart = await clientService.createCart('EUR');
+            localStorage.setItem('cartIdAnon', newCart.id);
+            setCartId(newCart);
             return;
         }
         try {
