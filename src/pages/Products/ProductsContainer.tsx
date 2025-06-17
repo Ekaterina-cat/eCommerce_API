@@ -30,6 +30,9 @@ const ProductContainer = (): JSX.Element => {
             } catch (error) {
                 console.error('Error initializing cart:', error);
             } finally {
+                const newCart = await clientService.createCart('EUR');
+                localStorage.setItem('cartIdAnon', newCart.id);
+                setCartId(newCart);
                 setIsCartLoading(false);
             }
         };
