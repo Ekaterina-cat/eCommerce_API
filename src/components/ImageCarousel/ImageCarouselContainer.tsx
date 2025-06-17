@@ -14,7 +14,7 @@ export const ImageCarouselContainer = (product: ProductProjection | null): Image
                     const imagesArray: string[] = [];
                     for (let i = 1; i <= 3; i++) {
                         const imageName = `${product.name['en-US']}_${i}.png`;
-                        imagesArray.push(`/public/${imageName}`);
+                        imagesArray.push(`/${imageName}`);
                     }
                     setImages(imagesArray);
                 }

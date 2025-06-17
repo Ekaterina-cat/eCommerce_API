@@ -26,7 +26,7 @@ const ProductsView = ({ products, onCardClick, onAddToCard }: ProductsViewProps)
                             <CardDescription className="text-center">{product.slug['en-US']}</CardDescription>
                             <div className="flex justify-center items-center h-48 w-full">
                                 <img
-                                    src={`public/${product.name['en-US']}_1.png`}
+                                    src={`${product.name['en-US']}_1.png`}
                                     alt={product.name['en-US']}
                                     className="object-contain max-h-full max-w-full transform group-hover:scale-115 transition-transform duration-800 origin-center"
                                     onClick={() => onCardClick(product.id)}
