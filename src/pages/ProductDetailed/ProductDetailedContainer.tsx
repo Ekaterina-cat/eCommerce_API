@@ -1,39 +1,32 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { ImageCarouselContainer } from '@components/ImageCarousel/ImageCarouselContainer';
+import useFetch from '@hooks/UseFecth/useFetch';
 import { ROUTE_PATH } from '@routes/constants/routes';
 import { clientService } from '@services/client/client.service';
-import { JSX, useEffect, useState } from 'react';
+import { JSX } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import ProductDetailedView from './ProductDetailedView';
 
 export const ProductDetailedContainer = (): JSX.Element => {
-    const [product, setProduct] = useState<ProductProjection | null>(null);
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
 
+    const { data: product, error, loading } = useFetch<ProductProjection>(() => clientService.getById(id!));
+
     const { images, imageIndex, handleNextImage, handlePrevImage, handleSetImageIndex } =
         ImageCarouselContainer(product);
-
-    useEffect(() => {
-        const fetchProduct = async (): Promise<void> => {
-            try {
-                const product = await clientService.getById(id!);
-                console.log(product);
-                setProduct(product);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-        void fetchProduct();
-    }, [id]);
 
     const handleNavigateToProducts = (): void => {
         void navigate(ROUTE_PATH.PRODUCTS);
     };
 
-    if (!product || images.length === 0) {
+    if (loading) {
         return <div>Loading...</div>;
+    }
+
+    if (error || !product || images.length === 0) {
+        return <div>Error: {error || 'No product data available'}</div>;
     }
 
     return (

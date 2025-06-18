@@ -13,7 +13,7 @@ import { Button } from '@components/ui/Button.tsx';
 import { Form } from '@components/ui/Form.tsx';
 import { JSX } from 'react';
 
-import FormSelect from '../../FormSelect/FormSelect.tsx';
+import FormSelect from '../FormSelect/FormSelect.tsx';
 
 const RegistrationFormView = ({
     form,

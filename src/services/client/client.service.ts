@@ -1,4 +1,4 @@
-import { ApiRoot, createApiBuilderFromCtpClient, ProductProjection } from '@commercetools/platform-sdk';
+import { ApiRoot, Cart, createApiBuilderFromCtpClient, ProductProjection } from '@commercetools/platform-sdk';
 import type { Client } from '@commercetools/ts-client';
 import { ClientBuilder } from '@commercetools/ts-client';
 import {
@@ -128,6 +128,149 @@ class ClientService {
             console.error('Error fetching products:', error);
             throw error;
         }
+    }
+
+    public async createCart(currency: string): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot
+                .me()
+                .carts()
+                .post({
+                    body: {
+                        currency,
+                    },
+                })
+                .execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error creating cart:', error);
+            throw error;
+        }
+    }
+
+    public async updateQuantityCart({
+        cartId,
+        lineItemId,
+        version,
+        quantity,
+    }: {
+        cartId: string;
+        lineItemId: string;
+        version: number;
+        quantity: number;
+    }): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot
+                .me()
+                .carts()
+                .withId({ ID: cartId })
+                .post({
+                    body: {
+                        version,
+                        actions: [
+                            {
+                                action: 'changeLineItemQuantity',
+                                lineItemId,
+                                quantity,
+                            },
+                        ],
+                    },
+                })
+                .execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error adding product to cart:', error);
+            throw error;
+        }
+    }
+
+    public async updateCart({
+        cartId,
+        productId,
+        version,
+    }: {
+        cartId: string;
+        productId: string;
+        version: number;
+    }): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot
+                .me()
+                .carts()
+                .withId({ ID: cartId })
+                .post({
+                    body: {
+                        version,
+                        actions: [
+                            {
+                                action: 'addLineItem',
+                                productId,
+                                variantId: 1,
+                                quantity: 1,
+                            },
+                        ],
+                    },
+                })
+                .execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error adding product to cart:', error);
+            throw error;
+        }
+    }
+
+    public async getCart(): Promise<Cart> {
+        try {
+            const client = this.getClientForAnonymousSession();
+            const apiRoot = this.createApiRoot(client).withProjectKey({
+                projectKey: envService.getProjectKey(),
+            });
+
+            const response = await apiRoot.me().activeCart().get().execute();
+
+            return response.body;
+        } catch (error) {
+            console.error('Error fetching cart:', error);
+            throw error;
+        }
+    }
+
+    private getClientForAnonymousSession(): Client {
+        return new ClientBuilder()
+            .withAnonymousSessionFlow({
+                host: envService.getOauthUrl(),
+                projectKey: envService.getProjectKey(),
+                credentials: {
+                    clientId: envService.getClientId(),
+                    clientSecret: envService.getClientSecret(),
+                },
+                scopes: envService.getScopes(),
+                tokenCache: tokenCacheService.tokenCache,
+                httpClient: fetch,
+            })
+            .withHttpMiddleware({
+                host: envService.getBaseUrl(),
+                httpClient: fetch,
+            })
+            .build();
     }
 
     private getClient(): Client {
