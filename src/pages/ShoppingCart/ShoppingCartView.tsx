@@ -86,6 +86,9 @@ export const ShoppingCartView = ({
             <div className="flex justify-end text-xl font-bold">
                 Total: {cartItems[0]?.price?.value?.currencyCode ?? 'N/A'} {calculateTotal().toFixed(2)}
             </div>
+            <Button onClick={onProducts} className="w-1/2">
+                Return to shop
+            </Button>
         </div>
     );
 };

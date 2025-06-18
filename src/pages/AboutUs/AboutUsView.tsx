@@ -66,7 +66,7 @@ const UserInfo = ({
     githubUsername: string;
     cvUrl: string;
 }): JSX.Element => (
-    <div className="flex flex-col justify-center gap-y-4">
+    <div className="flex flex-col items-center gap-y-4">
         <h1 className="flex items-center text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
             {name} {name === 'Hanna Pawlowa' && <TeamLiderIcon />}
         </h1>
@@ -93,18 +93,38 @@ export const AboutUsView = (): JSX.Element => {
     };
     return (
         <div className="flex flex-col gap-y-20">
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row flex-wrap justify-around gap-y-20">
                 {users.map((user, index) => (
-                    <UserInfo
-                        key={index}
-                        name={user.name}
-                        githubUrl={user.githubUrl}
-                        githubUsername={user.githubUsername}
-                        cvUrl={user.cvUrl}
-                    />
+                    <div key={index} className="w-full md:w-auto">
+                        <UserInfo
+                            name={user.name}
+                            githubUrl={user.githubUrl}
+                            githubUsername={user.githubUsername}
+                            cvUrl={user.cvUrl}
+                        />
+                    </div>
                 ))}
             </div>
-            <Button className="w-1/6" onClick={handleReturnToShop}>
+            <hr className="w-full border-t-2 border-gray-300 my-4" />
+            <div className="flex flex-row flex-wrap items-center">
+                <a href="https://rs.school/" className="w-1/2">
+                    <img
+                        src="rs_school_js.svg"
+                        alt="rs_school_js"
+                        className="h-24 hover:scale-110 transition duration-500"
+                    />
+                </a>
+                <h3 className="w-1/2">
+                    <p className="text-2xl font-bold">
+                        RS School is a free and community-based online education program conducted by The Rolling Scopes
+                        Community since 2013.
+                    </p>
+                    <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+                        RS School Principles are an ability to complete our mission
+                    </p>
+                </h3>
+            </div>
+            <Button className="w-1/4" onClick={handleReturnToShop}>
                 Return To Shop
             </Button>
         </div>
